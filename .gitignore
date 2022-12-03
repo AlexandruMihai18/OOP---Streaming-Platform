@@ -1,1 +1,4 @@
 /.idea/
+/out/
+/checkstyle.txt
+/checker/resources/result/
