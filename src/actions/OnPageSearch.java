@@ -38,8 +38,9 @@ public class OnPageSearch extends Action {
     public ArrayList<Movie> getMovies() {
         ArrayList<Movie> movies = new ArrayList<>();
         for (Movie movie : MoviesDatabase.getInstance().getMovies()) {
-            if (movie.getName().startsWith(startsWith))
+            if (movie.getName().startsWith(startsWith)) {
                 movies.add(movie);
+            }
         }
         return movies;
     }

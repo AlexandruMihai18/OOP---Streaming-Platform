@@ -4,14 +4,16 @@ import database.Movie;
 import fileio.ActionInput;
 import server.Navigator;
 
-public class OnPageLike extends Action {
+public class OnPageRateMovie extends Action {
     private String page;
     private String feature;
+    private int rate;
 
-    public OnPageLike(ActionInput action) {
+    public OnPageRateMovie(ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
+        rate = action.getRate();
     }
 
     @Override
@@ -27,12 +29,14 @@ public class OnPageLike extends Action {
             return;
         }
 
-        if (navigator.getCurrentUser().getLikedMovies().contains(watchedMovie)) {
+        if (navigator.getCurrentUser().getRatedMovies().contains(watchedMovie)) {
             setOutput("Error", new Navigator());
             return;
         }
 
-        navigator.getCurrentUser().getLikedMovies().add(watchedMovie);
-        watchedMovie.setNumLikes(watchedMovie.getNumLikes() + 1);
+        navigator.getCurrentUser().getRatedMovies().add(watchedMovie);
+        watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
+        watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
+        watchedMovie.setRating((float)watchedMovie.getTotalRating() / (float)watchedMovie.getNumRatings());
     }
 }

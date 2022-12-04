@@ -7,7 +7,7 @@ public final class ActionInput {
     private CredentialsInput credentials;
     private String startsWith;
     private FiltersInput filters;
-    private int count;
+    private String count;
     private String objectType;
     private String movie;
     private int rate;
@@ -60,11 +60,11 @@ public final class ActionInput {
         this.filters = filters;
     }
 
-    public int getCount() {
+    public String getCount() {
         return count;
     }
 
-    public void setCount(final int count) {
+    public void setCount(final String count) {
         this.count = count;
     }
 

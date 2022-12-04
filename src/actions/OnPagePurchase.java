@@ -4,11 +4,11 @@ import database.Movie;
 import fileio.ActionInput;
 import server.Navigator;
 
-public class OnPageWatch extends Action {
+public class OnPagePurchase extends Action {
     private String page;
     private String feature;
 
-    public OnPageWatch(ActionInput action) {
+    public OnPagePurchase(ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -21,14 +21,13 @@ public class OnPageWatch extends Action {
             return;
         }
 
-        Movie purchasedMovie = navigator.getCurrentMovies().get(0);
+        Movie movie = navigator.getCurrentMovies().get(0);
 
-        if (!navigator.getCurrentUser().getPurchasedMovies().contains(purchasedMovie)) {
+        if (navigator.getCurrentUser().getPurchasedMovies().contains(movie)) {
             setOutput("Error", new Navigator());
             return;
         }
 
-        navigator.getCurrentUser().getWatchedMovies().add(purchasedMovie);
-        setOutput(null, navigator);
+        navigator.getCurrentUser().getPurchasedMovies().add(movie);
     }
 }

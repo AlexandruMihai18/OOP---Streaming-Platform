@@ -1,14 +1,14 @@
 package actions;
 
-import database.Movie;
 import fileio.ActionInput;
+import helpers.MagicNumbers;
 import server.Navigator;
 
-public class OnPageWatch extends Action {
+public class OnPageBuyPremiumAccount extends Action {
     private String page;
     private String feature;
 
-    public OnPageWatch(ActionInput action) {
+    public OnPageBuyPremiumAccount(ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -21,14 +21,16 @@ public class OnPageWatch extends Action {
             return;
         }
 
-        Movie purchasedMovie = navigator.getCurrentMovies().get(0);
+        int currentTokens = navigator.getCurrentUser().getTokensCount();
 
-        if (!navigator.getCurrentUser().getPurchasedMovies().contains(purchasedMovie)) {
+        if (currentTokens < MagicNumbers.TOKENS_FOR_PREMIUM) {
             setOutput("Error", new Navigator());
             return;
         }
 
-        navigator.getCurrentUser().getWatchedMovies().add(purchasedMovie);
+        currentTokens -= MagicNumbers.TOKENS_FOR_PREMIUM;
+
+        navigator.getCurrentUser().setTokensCount(currentTokens);
         setOutput(null, navigator);
     }
 }
