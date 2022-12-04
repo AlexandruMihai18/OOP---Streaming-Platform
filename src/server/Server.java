@@ -10,7 +10,6 @@ import fileio.Input;
 public final class Server {
     private static Server server;
     private Input input;
-
     private Navigator navigator = new Navigator();
 
     public static Server getServer() {
