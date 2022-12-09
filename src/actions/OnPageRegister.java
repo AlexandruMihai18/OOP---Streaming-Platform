@@ -8,12 +8,12 @@ import pages.AuthenticatedHomepage;
 import pages.UnauthenticatedHomepage;
 import server.Navigator;
 
-public class OnPageRegister extends Action {
+public final class OnPageRegister extends Action {
     private String page;
     private String feature;
     private Credentials credentials;
 
-    public OnPageRegister(ActionInput action) {
+    public OnPageRegister(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -21,7 +21,7 @@ public class OnPageRegister extends Action {
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;

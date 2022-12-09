@@ -91,20 +91,4 @@ public final class ActionInput {
     public void setRate(final int rate) {
         this.rate = rate;
     }
-
-    @Override
-    public String toString() {
-        return "ActionInput{" +
-                "type='" + type + '\'' +
-                ", page='" + page + '\'' +
-                ", feature='" + feature + '\'' +
-                ", credentials=" + credentials +
-                ", startsWith='" + startsWith + '\'' +
-                ", filters=" + filters +
-                ", count=" + count +
-                ", objectType='" + objectType + '\'' +
-                ", movie='" + movie + '\'' +
-                ", rate=" + rate +
-                '}';
-    }
 }

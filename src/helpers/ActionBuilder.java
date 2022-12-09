@@ -49,9 +49,14 @@ public final class ActionBuilder {
                     case ActionsEnum.RATE_THE_MOVIE -> {
                         return new OnPageRateMovie(action);
                     }
+                    default -> {
+                        return null;
+                    }
                 }
             }
+            default -> {
+                return null;
+            }
        }
-       return null;
     }
 }

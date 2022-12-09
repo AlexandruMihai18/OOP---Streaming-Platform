@@ -1,19 +1,17 @@
 package actions;
 
 import database.Movie;
-import database.MoviesDatabase;
 import fileio.ActionInput;
 import server.Navigator;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-public class OnPageSearch extends Action {
+public final class OnPageSearch extends Action {
     private String page;
     private String feature;
     private String startsWith;
 
-    public OnPageSearch(ActionInput action) {
+    public OnPageSearch(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -21,27 +19,25 @@ public class OnPageSearch extends Action {
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;
         }
 
-        ArrayList<Movie> searchMovies = getMovies();
-        ArrayList<Movie> previousMovies = navigator.getCurrentMovies();
+        ArrayList<Movie> searchMovies = getMovies(navigator.getAllMoviesFromPage());
         navigator.setCurrentMovies(searchMovies);
 
         setOutput(null, navigator);
-        navigator.setCurrentMovies(previousMovies);
     }
 
-    public ArrayList<Movie> getMovies() {
-        ArrayList<Movie> movies = new ArrayList<>();
-        for (Movie movie : MoviesDatabase.getInstance().getMovies()) {
+    public ArrayList<Movie> getMovies(final ArrayList<Movie> movies) {
+        ArrayList<Movie> newMovies = new ArrayList<>();
+        for (Movie movie : movies) {
             if (movie.getName().startsWith(startsWith)) {
-                movies.add(movie);
+                newMovies.add(movie);
             }
         }
-        return movies;
+        return newMovies;
     }
 }

@@ -8,16 +8,21 @@ public final class Contains {
     private ArrayList<String> actors;
     private ArrayList<String> genre;
 
-    public Contains(ContainsInput contains) {
-        actors = new ArrayList<>(contains.getActors());
-        genre = new ArrayList<>(contains.getGenre());
+    public Contains(final ContainsInput contains) {
+        if (contains.getActors() != null) {
+            actors = new ArrayList<>(contains.getActors());
+        }
+
+        if (contains.getGenre() != null) {
+            genre = new ArrayList<>(contains.getGenre());
+        }
     }
 
     public ArrayList<String> getActors() {
         return actors;
     }
 
-    public void setActors(ArrayList<String> actors) {
+    public void setActors(final ArrayList<String> actors) {
         this.actors = actors;
     }
 
@@ -25,7 +30,7 @@ public final class Contains {
         return genre;
     }
 
-    public void setGenre(ArrayList<String> genre) {
+    public void setGenre(final ArrayList<String> genre) {
         this.genre = genre;
     }
 }

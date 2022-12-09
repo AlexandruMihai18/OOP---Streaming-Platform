@@ -6,7 +6,7 @@ public final class Sort {
     private String rating;
     private String duration;
 
-    public Sort(SortInput sort) {
+    public Sort(final SortInput sort) {
         rating = sort.getRating();
         duration = sort.getDuration();
     }
@@ -15,7 +15,7 @@ public final class Sort {
         return rating;
     }
 
-    public void setRating(String rating) {
+    public void setRating(final String rating) {
         this.rating = rating;
     }
 
@@ -23,7 +23,7 @@ public final class Sort {
         return duration;
     }
 
-    public void setDuration(String duration) {
+    public void setDuration(final String duration) {
         this.duration = duration;
     }
 }

@@ -4,19 +4,24 @@ import fileio.ActionInput;
 import helpers.MagicNumbers;
 import server.Navigator;
 
-public class OnPageBuyPremiumAccount extends Action {
+public final class OnPageBuyPremiumAccount extends Action {
     private String page;
     private String feature;
 
-    public OnPageBuyPremiumAccount(ActionInput action) {
+    public OnPageBuyPremiumAccount(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
+            setOutput("Error", new Navigator());
+            return;
+        }
+
+        if (navigator.getCurrentUser().getCredentials().getAccountType().equals("premium")) {
             setOutput("Error", new Navigator());
             return;
         }
@@ -31,6 +36,6 @@ public class OnPageBuyPremiumAccount extends Action {
         currentTokens -= MagicNumbers.TOKENS_FOR_PREMIUM;
 
         navigator.getCurrentUser().setTokensCount(currentTokens);
-        setOutput(null, navigator);
+        navigator.getCurrentUser().getCredentials().setAccountType("premium");
     }
 }

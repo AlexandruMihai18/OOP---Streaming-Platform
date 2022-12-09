@@ -1,6 +1,9 @@
 package helpers;
 
-public class PageEnum {
+public final class PageEnum {
+    private PageEnum() {
+
+    }
     public static final String UNAUTHENTICATED_HOMEPAGE = "logout";
     public static final String LOGIN_PAGE = "login";
     public static final String REGISTER_PAGE = "register";

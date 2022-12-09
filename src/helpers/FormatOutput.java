@@ -1,6 +1,7 @@
 package helpers;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import database.Movie;
 import database.User;
@@ -15,37 +16,59 @@ public final class FormatOutput {
 
     }
 
-    public static ObjectNode formatMovie(Movie movie) {
+    public static ObjectNode formatMovie(final Movie movie) {
+        if (movie == null) {
+            return null;
+        }
+
+        Movie deepCopyMovie = new Movie(movie);
+
         ObjectNode movieNode = mapper.createObjectNode();
-        movieNode.putPOJO("name", movie.getName());
-        movieNode.putPOJO("year", movie.getYear());
-        movieNode.putPOJO("duration", movie.getDuration());
-        movieNode.putPOJO("genres", movie.getGenres());
-        movieNode.putPOJO("actors", movie.getActors());
-        movieNode.putPOJO("countriesBanned", movie.getCountriesBanned());
-        movieNode.putPOJO("numLikes", movie.getNumLikes());
-        movieNode.putPOJO("rating", movie.getRating());
-        movieNode.putPOJO("numRatings", movie.getNumRatings());
+        movieNode.putPOJO("name", deepCopyMovie.getName());
+        movieNode.putPOJO("year", deepCopyMovie.getYear());
+        movieNode.putPOJO("duration", deepCopyMovie.getDuration());
+        movieNode.putPOJO("genres", deepCopyMovie.getGenres());
+        movieNode.putPOJO("actors", deepCopyMovie.getActors());
+        movieNode.putPOJO("countriesBanned", deepCopyMovie.getCountriesBanned());
+        movieNode.putPOJO("numLikes", deepCopyMovie.getNumLikes());
+        movieNode.putPOJO("rating", deepCopyMovie.getRating());
+        movieNode.putPOJO("numRatings", deepCopyMovie.getNumRatings());
         return movieNode;
     }
 
-    public static ObjectNode formatUser(User user) {
+    public static ObjectNode formatUser(final User user) {
+        if (user == null) {
+            return null;
+        }
+
+        User deepCopyUser = new User(user);
+
         ObjectNode userNode = mapper.createObjectNode();
-        userNode.putPOJO("credentials", user.getCredentials());
-        userNode.putPOJO("tokensCount", user.getTokensCount());
-        userNode.putPOJO("numFreePremiumMovies", user.getNumFreePremiumMovies());
-        userNode.putPOJO("purchasedMovies", user.getPurchasedMovies());
-        userNode.putPOJO("watchedMovies", user.getWatchedMovies());
-        userNode.putPOJO("likedMovies", user.getLikedMovies());
-        userNode.putPOJO("ratedMovies", user.getRatedMovies());
+        userNode.putPOJO("credentials", deepCopyUser.getCredentials());
+        userNode.putPOJO("tokensCount", deepCopyUser.getTokensCount());
+        userNode.putPOJO("numFreePremiumMovies", deepCopyUser.getNumFreePremiumMovies());
+        userNode.putPOJO("purchasedMovies", formatMovieList(deepCopyUser.getPurchasedMovies()));
+        userNode.putPOJO("watchedMovies", formatMovieList(deepCopyUser.getWatchedMovies()));
+        userNode.putPOJO("likedMovies", formatMovieList(deepCopyUser.getLikedMovies()));
+        userNode.putPOJO("ratedMovies", formatMovieList(deepCopyUser.getRatedMovies()));
         return userNode;
     }
 
-    public static ObjectNode formatAction(String error, Navigator navigator) {
+    public static ArrayNode formatMovieList(final ArrayList<Movie> movies) {
+        ArrayNode moviesNode = mapper.createArrayNode();
+
+        for (Movie movie : movies) {
+            moviesNode.add(formatMovie(movie));
+        }
+
+        return moviesNode;
+    }
+
+    public static ObjectNode formatAction(final String error, final Navigator navigator) {
         ObjectNode actionNode = mapper.createObjectNode();
         actionNode.putPOJO("error", error);
-        actionNode.putPOJO("currentMoviesList", navigator.getCurrentMovies());
-        actionNode.putPOJO("currentUser", navigator.getCurrentUser());
+        actionNode.putPOJO("currentMoviesList", formatMovieList(navigator.getCurrentMovies()));
+        actionNode.putPOJO("currentUser", formatUser(navigator.getCurrentUser()));
         return actionNode;
     }
 }

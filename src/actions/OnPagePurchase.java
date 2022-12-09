@@ -4,18 +4,18 @@ import database.Movie;
 import fileio.ActionInput;
 import server.Navigator;
 
-public class OnPagePurchase extends Action {
+public final class OnPagePurchase extends Action {
     private String page;
     private String feature;
 
-    public OnPagePurchase(ActionInput action) {
+    public OnPagePurchase(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;
@@ -29,5 +29,16 @@ public class OnPagePurchase extends Action {
         }
 
         navigator.getCurrentUser().getPurchasedMovies().add(movie);
+
+        if (navigator.getCurrentUser().getCredentials().getAccountType().equals("premium")
+                && navigator.getCurrentUser().getNumFreePremiumMovies() > 0) {
+            navigator.getCurrentUser().setNumFreePremiumMovies(
+                    navigator.getCurrentUser().getNumFreePremiumMovies() - 1);
+        } else {
+            navigator.getCurrentUser().setTokensCount(
+                    navigator.getCurrentUser().getTokensCount() - 2);
+        }
+
+        setOutput(null, navigator);
     }
 }

@@ -9,7 +9,14 @@ public final class Credentials {
     private String country;
     private String balance;
 
-    public Credentials(CredentialsInput credentials) {
+    public Credentials(final Credentials credentials) {
+        this.name = credentials.getName();
+        this.password = credentials.getPassword();
+        this.accountType = credentials.getAccountType();
+        this.country = credentials.getCountry();
+        this.balance = credentials.getBalance();
+    }
+    public Credentials(final CredentialsInput credentials) {
         name = credentials.getName();
         password = credentials.getPassword();
         accountType = credentials.getAccountType();
@@ -21,7 +28,7 @@ public final class Credentials {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -29,7 +36,7 @@ public final class Credentials {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
@@ -37,7 +44,7 @@ public final class Credentials {
         return accountType;
     }
 
-    public void setAccountType(String accountType) {
+    public void setAccountType(final String accountType) {
         this.accountType = accountType;
     }
 
@@ -45,7 +52,7 @@ public final class Credentials {
         return country;
     }
 
-    public void setCountry(String country) {
+    public void setCountry(final String country) {
         this.country = country;
     }
 
@@ -53,7 +60,7 @@ public final class Credentials {
         return balance;
     }
 
-    public void setBalance(String balance) {
+    public void setBalance(final String balance) {
         this.balance = balance;
     }
 }

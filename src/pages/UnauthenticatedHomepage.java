@@ -2,7 +2,7 @@ package pages;
 
 import helpers.PageEnum;
 
-public class UnauthenticatedHomepage extends Page{
+public final class UnauthenticatedHomepage extends Page {
     public UnauthenticatedHomepage() {
         super();
     }

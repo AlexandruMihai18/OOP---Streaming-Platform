@@ -12,6 +12,7 @@ import java.util.ArrayList;
 public final class Navigator {
     private Page currentPage = new UnauthenticatedHomepage();
     private ArrayList<Movie> currentMovies = new ArrayList<>();
+    private ArrayList<Movie> allMoviesFromPage = new ArrayList<>();
     private User currentUser = null;
 
     public Navigator() {
@@ -22,7 +23,7 @@ public final class Navigator {
         return currentUser;
     }
 
-    public void setCurrentUser(User currentUser) {
+    public void setCurrentUser(final User currentUser) {
         this.currentUser = currentUser;
     }
 
@@ -30,7 +31,7 @@ public final class Navigator {
         return currentPage;
     }
 
-    public void setCurrentPage(Page currentPage) {
+    public void setCurrentPage(final Page currentPage) {
         this.currentPage = currentPage;
     }
 
@@ -38,8 +39,16 @@ public final class Navigator {
         return currentMovies;
     }
 
-    public void setCurrentMovies(ArrayList<Movie> currentMovies) {
+    public void setCurrentMovies(final ArrayList<Movie> currentMovies) {
         this.currentMovies = currentMovies;
+    }
+
+    public ArrayList<Movie> getAllMoviesFromPage() {
+        return allMoviesFromPage;
+    }
+
+    public void setAllMoviesFromPage(final ArrayList<Movie> allMoviesFromPage) {
+        this.allMoviesFromPage = allMoviesFromPage;
     }
 
     public void startNavigation() {
