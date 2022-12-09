@@ -6,9 +6,9 @@ import server.Navigator;
 
 public abstract class Action {
     private String type;
-    ObjectNode outputNode = null;
+    private ObjectNode outputNode = null;
 
-    public Action(String type) {
+    public Action(final String type) {
         this.type = type;
     }
 
@@ -16,7 +16,7 @@ public abstract class Action {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 
@@ -24,13 +24,13 @@ public abstract class Action {
         return outputNode;
     }
 
-    public void setOutputNode(ObjectNode outputNode) {
+    public void setOutputNode(final ObjectNode outputNode) {
         this.outputNode = outputNode;
     }
 
     public abstract void doAction(Navigator navigator);
 
-    public void setOutput(String error, Navigator navigator) {
+    public void setOutput(final String error, final Navigator navigator) {
         outputNode = FormatOutput.formatAction(error, navigator);
     }
 }

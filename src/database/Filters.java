@@ -6,16 +6,20 @@ public final class Filters {
     private Contains contains;
     private Sort sort;
 
-    public Filters(FiltersInput filters) {
-        contains = new Contains(filters.getContains());
-        sort = new Sort(filters.getSort());
+    public Filters(final FiltersInput filters) {
+        if (filters.getContains() != null) {
+            contains = new Contains(filters.getContains());
+        }
+        if (filters.getSort() != null) {
+            sort = new Sort(filters.getSort());
+        }
     }
 
     public Contains getContains() {
         return contains;
     }
 
-    public void setContains(Contains contains) {
+    public void setContains(final Contains contains) {
         this.contains = contains;
     }
 
@@ -23,7 +27,7 @@ public final class Filters {
         return sort;
     }
 
-    public void setSort(Sort sort) {
+    public void setSort(final Sort sort) {
         this.sort = sort;
     }
 }

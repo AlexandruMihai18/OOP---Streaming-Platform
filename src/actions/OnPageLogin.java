@@ -8,18 +8,18 @@ import pages.AuthenticatedHomepage;
 import pages.UnauthenticatedHomepage;
 import server.Navigator;
 
-public class OnPageLogin extends Action {
+public final class OnPageLogin extends Action {
     private String feature;
     private Credentials credentials;
 
-    public OnPageLogin(ActionInput action) {
+    public OnPageLogin(final ActionInput action) {
         super(action.getType());
         feature = action.getFeature();
         credentials = new Credentials(action.getCredentials());
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;

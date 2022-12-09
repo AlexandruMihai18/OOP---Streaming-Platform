@@ -2,3 +2,6 @@
 /out/
 /checkstyle.txt
 /checker/resources/result/
+/results.out
+/checker/resources/config.json
+/checker/resources/ref/

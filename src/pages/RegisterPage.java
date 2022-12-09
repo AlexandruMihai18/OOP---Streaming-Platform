@@ -2,7 +2,7 @@ package pages;
 
 import helpers.ActionsEnum;
 
-public class RegisterPage extends Page {
+public final class RegisterPage extends Page {
     public RegisterPage() {
         super();
     }

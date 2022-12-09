@@ -3,12 +3,12 @@ package actions;
 import fileio.ActionInput;
 import server.Navigator;
 
-public class OnPageBuyTokens extends Action {
+public final class OnPageBuyTokens extends Action {
     private String page;
     private String feature;
     private String count;
 
-    public OnPageBuyTokens(ActionInput action) {
+    public OnPageBuyTokens(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -16,13 +16,14 @@ public class OnPageBuyTokens extends Action {
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;
         }
 
-        int currentBalance = Integer.parseInt(navigator.getCurrentUser().getCredentials().getBalance());
+        int currentBalance = Integer
+                .parseInt(navigator.getCurrentUser().getCredentials().getBalance());
         int currentTokens = navigator.getCurrentUser().getTokensCount();
         int currentCount = Integer.parseInt(count);
 
@@ -36,6 +37,5 @@ public class OnPageBuyTokens extends Action {
 
         navigator.getCurrentUser().getCredentials().setBalance(Integer.toString(currentBalance));
         navigator.getCurrentUser().setTokensCount(currentTokens);
-        setOutput(null, navigator);
     }
 }

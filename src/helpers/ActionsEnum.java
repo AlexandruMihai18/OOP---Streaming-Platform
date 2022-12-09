@@ -1,6 +1,9 @@
 package helpers;
 
 public class ActionsEnum {
+    private ActionsEnum() {
+
+    }
     public static final String CHANGE_PAGE_TYPE = "change page";
     public static final String ON_PAGE_TYPE = "on page";
     public static final String LOGIN = "login";
@@ -13,4 +16,5 @@ public class ActionsEnum {
     public static final String RATE_THE_MOVIE = "rate";
     public static final String BUY_PREMIUM_ACCOUNT = "buy premium account";
     public static final String BUY_TOKENS = "buy tokens";
+    public static final String DECREASING = "decreasing";
 }

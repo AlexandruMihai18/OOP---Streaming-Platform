@@ -19,11 +19,15 @@ public final class MoviesDatabase {
         return moviesDatabase;
     }
 
+    public void resetDatabase() {
+        moviesDatabase = null;
+    }
+
     public ArrayList<Movie> getMovies() {
         return movies;
     }
 
-    public void setMovies(ArrayList<MovieInput> movies) {
+    public void setMovies(final ArrayList<MovieInput> movies) {
         for (MovieInput movie : movies) {
             this.movies.add(new Movie(movie));
         }

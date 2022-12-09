@@ -2,7 +2,7 @@ package fileio;
 
 import java.util.ArrayList;
 
-public class MovieInput {
+public final class MovieInput {
     private String name;
     private int year;
     private int duration;
@@ -14,7 +14,7 @@ public class MovieInput {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -22,7 +22,7 @@ public class MovieInput {
         return year;
     }
 
-    public void setYear(int year) {
+    public void setYear(final int year) {
         this.year = year;
     }
 
@@ -30,7 +30,7 @@ public class MovieInput {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(final int duration) {
         this.duration = duration;
     }
 
@@ -38,7 +38,7 @@ public class MovieInput {
         return genres;
     }
 
-    public void setGenres(ArrayList<String> genres) {
+    public void setGenres(final ArrayList<String> genres) {
         this.genres = genres;
     }
 
@@ -46,7 +46,7 @@ public class MovieInput {
         return actors;
     }
 
-    public void setActors(ArrayList<String> actors) {
+    public void setActors(final ArrayList<String> actors) {
         this.actors = actors;
     }
 
@@ -54,19 +54,7 @@ public class MovieInput {
         return countriesBanned;
     }
 
-    public void setCountriesBanned(ArrayList<String> countriesBanned) {
+    public void setCountriesBanned(final ArrayList<String> countriesBanned) {
         this.countriesBanned = countriesBanned;
-    }
-
-    @Override
-    public String toString() {
-        return "MovieInput{" +
-                "name='" + name + '\'' +
-                ", year=" + year +
-                ", duration=" + duration +
-                ", genres=" + genres +
-                ", actors=" + actors +
-                ", countriesBanned=" + countriesBanned +
-                '}';
     }
 }

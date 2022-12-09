@@ -27,11 +27,11 @@ public abstract class Page {
 
     public abstract void setActions();
 
-    public boolean checkNextPage(String nextPage) {
+    public boolean checkNextPage(final String nextPage) {
         return nextPages.contains(nextPage);
     }
 
-    public boolean checkAction(String action) {
+    public boolean checkAction(final String action) {
         return actions.contains(action);
     }
 

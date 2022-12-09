@@ -14,7 +14,17 @@ public final class User {
     private ArrayList<Movie> likedMovies;
     private ArrayList<Movie> ratedMovies;
 
-    public User(Credentials credentials) {
+    public User(final User user) {
+        this.credentials = new Credentials(user.getCredentials());
+        this.tokensCount = user.getTokensCount();
+        this.numFreePremiumMovies = user.getNumFreePremiumMovies();
+        this.purchasedMovies = new ArrayList<>(user.getPurchasedMovies());
+        this.watchedMovies = new ArrayList<>(user.getWatchedMovies());
+        this.likedMovies = new ArrayList<>(user.getLikedMovies());
+        this.ratedMovies = new ArrayList<>(user.getRatedMovies());
+    }
+
+    public User(final Credentials credentials) {
         this.credentials = credentials;
         tokensCount = 0;
         numFreePremiumMovies = MagicNumbers.NO_PREMIUM_MOVIES;
@@ -23,7 +33,7 @@ public final class User {
         likedMovies = new ArrayList<>();
         ratedMovies = new ArrayList<>();
     }
-    public User(UserInput user) {
+    public User(final UserInput user) {
         credentials = new Credentials(user.getCredentials());
         tokensCount = 0;
         numFreePremiumMovies = MagicNumbers.NO_PREMIUM_MOVIES;
@@ -37,7 +47,7 @@ public final class User {
         return credentials;
     }
 
-    public void setCredentials(Credentials credentials) {
+    public void setCredentials(final Credentials credentials) {
         this.credentials = credentials;
     }
 
@@ -45,7 +55,7 @@ public final class User {
         return tokensCount;
     }
 
-    public void setTokensCount(int tokensCount) {
+    public void setTokensCount(final int tokensCount) {
         this.tokensCount = tokensCount;
     }
 
@@ -53,7 +63,7 @@ public final class User {
         return numFreePremiumMovies;
     }
 
-    public void setNumFreePremiumMovies(int numFreePremiumMovies) {
+    public void setNumFreePremiumMovies(final int numFreePremiumMovies) {
         this.numFreePremiumMovies = numFreePremiumMovies;
     }
 
@@ -61,7 +71,7 @@ public final class User {
         return purchasedMovies;
     }
 
-    public void setPurchasedMovies(ArrayList<Movie> purchasedMovies) {
+    public void setPurchasedMovies(final ArrayList<Movie> purchasedMovies) {
         this.purchasedMovies = purchasedMovies;
     }
 
@@ -69,7 +79,7 @@ public final class User {
         return watchedMovies;
     }
 
-    public void setWatchedMovies(ArrayList<Movie> watchedMovies) {
+    public void setWatchedMovies(final ArrayList<Movie> watchedMovies) {
         this.watchedMovies = watchedMovies;
     }
 
@@ -77,7 +87,7 @@ public final class User {
         return likedMovies;
     }
 
-    public void setLikedMovies(ArrayList<Movie> likedMovies) {
+    public void setLikedMovies(final ArrayList<Movie> likedMovies) {
         this.likedMovies = likedMovies;
     }
 
@@ -85,20 +95,7 @@ public final class User {
         return ratedMovies;
     }
 
-    public void setRatedMovies(ArrayList<Movie> ratedMovies) {
+    public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "credentials=" + credentials +
-                ", tokensCount=" + tokensCount +
-                ", numFreePremiumMovies=" + numFreePremiumMovies +
-                ", purchasedMovies=" + purchasedMovies +
-                ", watchedMovies=" + watchedMovies +
-                ", likedMovies=" + likedMovies +
-                ", ratedMovies=" + ratedMovies +
-                '}';
     }
 }

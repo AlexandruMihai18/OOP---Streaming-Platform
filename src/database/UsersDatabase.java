@@ -19,11 +19,15 @@ public final class UsersDatabase {
         return usersDatabase;
     }
 
+    public void resetDatabase() {
+        usersDatabase = null;
+    }
+
     public ArrayList<User> getUsers() {
         return users;
     }
 
-    public void setUsers(ArrayList<UserInput> users) {
+    public void setUsers(final ArrayList<UserInput> users) {
         for (UserInput user : users) {
             this.users.add(new User(user));
         }

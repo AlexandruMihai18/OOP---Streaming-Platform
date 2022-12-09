@@ -2,14 +2,15 @@ package actions;
 
 import database.Movie;
 import fileio.ActionInput;
+import helpers.MagicNumbers;
 import server.Navigator;
 
-public class OnPageRateMovie extends Action {
+public final class OnPageRateMovie extends Action {
     private String page;
     private String feature;
     private int rate;
 
-    public OnPageRateMovie(ActionInput action) {
+    public OnPageRateMovie(final ActionInput action) {
         super(action.getType());
         page = action.getPage();
         feature = action.getFeature();
@@ -17,7 +18,7 @@ public class OnPageRateMovie extends Action {
     }
 
     @Override
-    public void doAction(Navigator navigator) {
+    public void doAction(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(feature)) {
             setOutput("Error", new Navigator());
             return;
@@ -34,9 +35,17 @@ public class OnPageRateMovie extends Action {
             return;
         }
 
+        if (rate > MagicNumbers.MAX_RATE) {
+            setOutput("Error", new Navigator());
+            return;
+        }
+
         navigator.getCurrentUser().getRatedMovies().add(watchedMovie);
         watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
         watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
-        watchedMovie.setRating((float)watchedMovie.getTotalRating() / (float)watchedMovie.getNumRatings());
+        watchedMovie.setRating((float) watchedMovie.getTotalRating()
+                / (float) watchedMovie.getNumRatings());
+
+        setOutput(null, navigator);
     }
 }

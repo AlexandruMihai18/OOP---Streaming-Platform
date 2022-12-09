@@ -3,7 +3,7 @@ package pages;
 import helpers.ActionsEnum;
 import helpers.PageEnum;
 
-public class UpgradesPage extends Page {
+public final class UpgradesPage extends Page {
     public UpgradesPage() {
         super();
     }

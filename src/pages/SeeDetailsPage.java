@@ -3,7 +3,7 @@ package pages;
 import helpers.ActionsEnum;
 import helpers.PageEnum;
 
-public class SeeDetailsPage extends Page {
+public final class SeeDetailsPage extends Page {
     public SeeDetailsPage() {
         super();
     }

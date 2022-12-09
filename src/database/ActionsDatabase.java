@@ -21,11 +21,15 @@ public final class ActionsDatabase {
         return actionsDatabase;
     }
 
+    public void resetDatabase() {
+        actionsDatabase = null;
+    }
+
     public ArrayList<Action> getActions() {
         return actions;
     }
 
-    public void setActions(ArrayList<ActionInput> actions) {
+    public void setActions(final ArrayList<ActionInput> actions) {
         for (ActionInput action : actions) {
             this.actions.add(ActionBuilder.buildAction(action));
         }

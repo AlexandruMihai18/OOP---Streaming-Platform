@@ -18,15 +18,7 @@ public final class ContainsInput {
         return genre;
     }
 
-    public void setGenre(ArrayList<String> genre) {
+    public void setGenre(final ArrayList<String> genre) {
         this.genre = genre;
-    }
-
-    @Override
-    public String toString() {
-        return "ContainsInput{" +
-                "actors=" + actors +
-                ", genre=" + genre +
-                '}';
     }
 }

@@ -28,9 +28,14 @@ public final class Server {
     }
 
     public void startServer() {
+        UsersDatabase.getInstance().resetDatabase();
+        MoviesDatabase.getInstance().resetDatabase();
+        ActionsDatabase.getInstance().resetDatabase();
+
         UsersDatabase.getInstance().setUsers(input.getUsers());
         MoviesDatabase.getInstance().setMovies(input.getMovies());
         ActionsDatabase.getInstance().setActions(input.getActions());
+
         navigator.startNavigation();
     }
 
