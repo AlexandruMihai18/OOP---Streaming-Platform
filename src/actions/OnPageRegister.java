@@ -22,26 +22,39 @@ public final class OnPageRegister extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         User checkUser = getUser();
 
+        /**
+         * Check if the user is already in the database
+         */
         if (checkUser != null) {
-            setOutput("Error", new Navigator());
+            setError();
             navigator.setCurrentPage(new UnauthenticatedHomepage());
             return;
         }
 
+        /**
+         * Register the user and add it to the database
+         */
         User user = new User(credentials);
         UsersDatabase.getInstance().getUsers().add(user);
         navigator.setCurrentPage(new AuthenticatedHomepage());
         navigator.setCurrentUser(user);
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 
+    /**
+     * Find the User inside the users Database
+     * @return the found user / null otherwise
+     */
     public User getUser() {
         for (User user : UsersDatabase.getInstance().getUsers()) {
             if (user.getCredentials().getName().equals(credentials.getName())) {

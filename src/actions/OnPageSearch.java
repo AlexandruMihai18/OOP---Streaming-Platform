@@ -20,17 +20,25 @@ public final class OnPageSearch extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         ArrayList<Movie> searchMovies = getMovies(navigator.getAllMoviesFromPage());
         navigator.setCurrentMovies(searchMovies);
 
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 
+    /**
+     * Find the movies starting with the given prefix
+     * @param movies available movies
+     * @return movies starting with a given prefix
+     */
     public ArrayList<Movie> getMovies(final ArrayList<Movie> movies) {
         ArrayList<Movie> newMovies = new ArrayList<>();
         for (Movie movie : movies) {

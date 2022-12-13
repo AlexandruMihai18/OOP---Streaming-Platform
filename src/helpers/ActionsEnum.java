@@ -1,6 +1,6 @@
 package helpers;
 
-public class ActionsEnum {
+public final class ActionsEnum {
     private ActionsEnum() {
 
     }
@@ -16,5 +16,4 @@ public class ActionsEnum {
     public static final String RATE_THE_MOVIE = "rate";
     public static final String BUY_PREMIUM_ACCOUNT = "buy premium account";
     public static final String BUY_TOKENS = "buy tokens";
-    public static final String DECREASING = "decreasing";
 }

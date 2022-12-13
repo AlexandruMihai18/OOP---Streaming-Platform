@@ -51,6 +51,9 @@ public final class Navigator {
         this.allMoviesFromPage = allMoviesFromPage;
     }
 
+    /**
+     * Start navigation between pages by following the actions from the actions databse
+     */
     public void startNavigation() {
         for (Action action : ActionsDatabase.getInstance().getActions()) {
             action.doAction(this);

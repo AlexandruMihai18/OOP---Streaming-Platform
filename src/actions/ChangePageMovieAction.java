@@ -18,15 +18,21 @@ public final class ChangePageMovieAction extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check if the page is valid
+         */
         if (!navigator.getCurrentPage().checkNextPage(page)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         Movie currentMovie = getMovie(navigator.getCurrentMovies());
 
+        /**
+         * Display error if the searched movie does not exist
+         */
         if (currentMovie == null) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
@@ -34,9 +40,14 @@ public final class ChangePageMovieAction extends Action {
         navigator.setCurrentMovies(new ArrayList<>());
         navigator.getCurrentMovies().add(currentMovie);
 
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 
+    /**
+     * Display movie information based on name
+     * @param movies available movies to a user
+     * @return movie based on name
+     */
     public Movie getMovie(final ArrayList<Movie> movies) {
         for (Movie movie : movies) {
             if (movie.getName().equals(this.movie)) {
