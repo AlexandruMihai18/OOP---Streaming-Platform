@@ -6,7 +6,9 @@ import helpers.FormatOutput;
 import server.Navigator;
 
 /**
- * Marks a user action on the platform
+ * Strategy Pattern class designed to identify each type of possible action.
+ * The doAction method is defined as abstract and implemented accordingly to
+ * each algorithm needs in order to change the navigator.
  */
 public abstract class Action {
     private String type;
@@ -41,7 +43,7 @@ public abstract class Action {
     }
 
     /**
-     * Changes applied to the server.
+     * Changes applied to the server -- key implementation for the Strategy Design Pattern
      * @param navigator currentPage, currentUser, currentMovies required for action
      */
     public abstract void doAction(Navigator navigator);

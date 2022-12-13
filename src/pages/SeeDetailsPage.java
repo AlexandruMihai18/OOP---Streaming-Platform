@@ -1,6 +1,6 @@
 package pages;
 
-import helpers.ActionsEnum;
+import helpers.ActionFactory;
 import helpers.PageEnum;
 
 public final class SeeDetailsPage extends Page {
@@ -18,9 +18,9 @@ public final class SeeDetailsPage extends Page {
 
     @Override
     public void setActions() {
-        this.getActions().add(ActionsEnum.PURCHASE);
-        this.getActions().add(ActionsEnum.WATCH);
-        this.getActions().add(ActionsEnum.LIKE);
-        this.getActions().add(ActionsEnum.RATE_THE_MOVIE);
+        this.getActions().add(ActionFactory.PURCHASE);
+        this.getActions().add(ActionFactory.WATCH);
+        this.getActions().add(ActionFactory.LIKE);
+        this.getActions().add(ActionFactory.RATE_THE_MOVIE);
     }
 }

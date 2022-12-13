@@ -52,7 +52,7 @@ public final class Navigator {
     }
 
     /**
-     * Start navigation between pages by following the actions from the actions databse
+     * Start navigation between pages by following the actions from the actions database
      */
     public void startNavigation() {
         for (Action action : ActionsDatabase.getInstance().getActions()) {
