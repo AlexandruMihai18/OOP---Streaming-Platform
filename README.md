@@ -1,6 +1,11 @@
-# OOP-Streaming Platform
+# OOP - Streaming Platform
 
 *Alexandru Mihai 323CA*
+
+---
+## Keywords
+* Singleton Pattern -- Factory Pattern -- Strategy Pattern
+* Streaming Service -- Navigation between pages -- Users watch movies :D!
 
 ---
 ## Introduction
