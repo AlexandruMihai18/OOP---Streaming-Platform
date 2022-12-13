@@ -13,6 +13,12 @@ public final class Main {
     private Main() {
 
     }
+
+    /**
+     * Connection bridge between the tester and the server
+     * @param args file names used to read and write the data
+     * @throws IOException
+     */
     public static void main(final String[] args) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         Input inputData = objectMapper.readValue(new File(args[0]), Input.class);

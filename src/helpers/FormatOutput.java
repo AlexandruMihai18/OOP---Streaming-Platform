@@ -16,6 +16,11 @@ public final class FormatOutput {
 
     }
 
+    /**
+     * Format the movie output using the relevant fields
+     * @param movie given movie to display
+     * @return ObjectNode containing the relevant movie information
+     */
     public static ObjectNode formatMovie(final Movie movie) {
         if (movie == null) {
             return null;
@@ -36,6 +41,11 @@ public final class FormatOutput {
         return movieNode;
     }
 
+    /**
+     * Format the user output using the relevant fields
+     * @param user given user to display
+     * @return ObjectNode containing the relevant user information
+     */
     public static ObjectNode formatUser(final User user) {
         if (user == null) {
             return null;
@@ -54,6 +64,11 @@ public final class FormatOutput {
         return userNode;
     }
 
+    /**
+     * Format a list of movies
+     * @param movies given list of movies
+     * @return ArrayNode containing the relevant information about movies
+     */
     public static ArrayNode formatMovieList(final ArrayList<Movie> movies) {
         ArrayNode moviesNode = mapper.createArrayNode();
 
@@ -64,6 +79,13 @@ public final class FormatOutput {
         return moviesNode;
     }
 
+    /**
+     * Format the action output using the relevant field
+     * @param error error message / null
+     * @param navigator currentUser, currentMovies
+     * @return ObjectNode containing the output message, as well as the currentUser
+     *         and current Movies displayed
+     */
     public static ObjectNode formatAction(final String error, final Navigator navigator) {
         ObjectNode actionNode = mapper.createObjectNode();
         actionNode.putPOJO("error", error);

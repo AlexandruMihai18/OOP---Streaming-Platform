@@ -16,25 +16,37 @@ public final class OnPageLike extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Check if the movie has been watched
+         */
         Movie watchedMovie = navigator.getCurrentMovies().get(0);
         if (!navigator.getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Check if the movie has already been liked
+         */
         if (navigator.getCurrentUser().getLikedMovies().contains(watchedMovie)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Mark the movie as liked
+         */
         navigator.getCurrentUser().getLikedMovies().add(watchedMovie);
         watchedMovie.setNumLikes(watchedMovie.getNumLikes() + 1);
 
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 }

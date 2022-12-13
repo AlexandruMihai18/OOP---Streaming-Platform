@@ -1,7 +1,7 @@
 package database;
 
 import fileio.UserInput;
-import helpers.MagicNumbers;
+import helpers.Constants;
 
 import java.util.ArrayList;
 
@@ -27,7 +27,7 @@ public final class User {
     public User(final Credentials credentials) {
         this.credentials = credentials;
         tokensCount = 0;
-        numFreePremiumMovies = MagicNumbers.NO_PREMIUM_MOVIES;
+        numFreePremiumMovies = Constants.NO_PREMIUM_MOVIES;
         purchasedMovies = new ArrayList<>();
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();
@@ -36,7 +36,7 @@ public final class User {
     public User(final UserInput user) {
         credentials = new Credentials(user.getCredentials());
         tokensCount = 0;
-        numFreePremiumMovies = MagicNumbers.NO_PREMIUM_MOVIES;
+        numFreePremiumMovies = Constants.NO_PREMIUM_MOVIES;
         purchasedMovies = new ArrayList<>();
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();

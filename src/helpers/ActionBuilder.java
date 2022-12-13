@@ -8,6 +8,11 @@ public final class ActionBuilder {
 
     }
 
+    /**
+     * Assess the type of the action and return a specific one
+     * @param action given input action
+     * @return specific type of action
+     */
     public static Action buildAction(final ActionInput action) {
        switch (action.getType()) {
             case ActionsEnum.CHANGE_PAGE_TYPE -> {

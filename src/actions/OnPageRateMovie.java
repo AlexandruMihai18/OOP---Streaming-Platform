@@ -2,7 +2,7 @@ package actions;
 
 import database.Movie;
 import fileio.ActionInput;
-import helpers.MagicNumbers;
+import helpers.Constants;
 import server.Navigator;
 
 public final class OnPageRateMovie extends Action {
@@ -19,33 +19,49 @@ public final class OnPageRateMovie extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         Movie watchedMovie = navigator.getCurrentMovies().get(0);
+
+        /**
+         * Check if the movie has been watch
+         */
         if (!navigator.getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Check if the movie has already been rated
+         */
         if (navigator.getCurrentUser().getRatedMovies().contains(watchedMovie)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
-        if (rate > MagicNumbers.MAX_RATE) {
-            setOutput("Error", new Navigator());
+        /**
+         * Check if the rate exceeds the max rate available
+         */
+        if (rate > Constants.MAX_RATE) {
+            setError();
             return;
         }
 
+        /**
+         * Mark the movie as rated and recalculate the rating
+         */
         navigator.getCurrentUser().getRatedMovies().add(watchedMovie);
         watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
         watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
         watchedMovie.setRating((float) watchedMovie.getTotalRating()
                 / (float) watchedMovie.getNumRatings());
 
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 }

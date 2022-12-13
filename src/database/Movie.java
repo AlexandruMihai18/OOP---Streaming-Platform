@@ -121,4 +121,56 @@ public final class Movie {
     public void setTotalRating(final int totalRating) {
         this.totalRating = totalRating;
     }
+
+    /**
+     * Comparing 2 movies based on their rating
+     * @param o generic object used for comparison
+     * @return 1 - the current movie has a higher rating, 0 - same rating,
+     * -1 the current movie has a lower rating
+     */
+    public int compareByRating(final Object o) {
+        Movie movie = (Movie) o;
+
+        return Float.compare(rating, movie.getRating());
+    }
+
+    /**
+     * Comparing 2 movies based on their duration
+     * @param o generic object used for comparison
+     * @return 1 - the current movie has a longer duration, 0 - same duration,
+     * -1 the current movie has a smaller duration
+     */
+    public int compareByDuration(final Object o) {
+        Movie movie = (Movie) o;
+
+        return Integer.compare(duration, movie.getDuration());
+    }
+
+    /**
+     * Check if the movie contains a list of actors
+     * @param actors list of actors required
+     * @return true - the film contains those actors, false - otherwise
+     */
+    public boolean checkMovieByActors(final ArrayList<String> actors) {
+        for (String actor : actors) {
+            if (!this.actors.contains(actor)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * Check if the movie contains a list of genres
+     * @param genres list of genres required
+     * @return true - the film contains those actors, false - otherwise
+     */
+    public boolean checkMovieByGenre(final ArrayList<String> genres) {
+        for (String genre : genres) {
+            if (!this.genres.contains(genre)) {
+                return false;
+            }
+        }
+        return true;
+    }
 }

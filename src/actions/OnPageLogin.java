@@ -20,23 +20,36 @@ public final class OnPageLogin extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Check if there is a user with those credentials
+         */
         User newUser = getUser();
         if (newUser == null) {
-            setOutput("Error", new Navigator());
+            setError();
             navigator.setCurrentPage(new UnauthenticatedHomepage());
             return;
         }
 
+        /**
+         * Log in action - mark the currentUser
+         */
         navigator.setCurrentUser(newUser);
         navigator.setCurrentPage(new AuthenticatedHomepage());
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 
+    /**
+     * Find the User inside the users Database
+     * @return the found user / null otherwise
+     */
     public User getUser() {
         for (User user : UsersDatabase.getInstance().getUsers()) {
             if (user.getCredentials().getName().equals(credentials.getName())) {

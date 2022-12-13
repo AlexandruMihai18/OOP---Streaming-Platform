@@ -16,19 +16,25 @@ public final class OnPageWatch extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         Movie purchasedMovie = navigator.getCurrentMovies().get(0);
 
+        /**
+         * Check if the movie has been purchased
+         */
         if (!navigator.getCurrentUser().getPurchasedMovies().contains(purchasedMovie)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
         navigator.getCurrentUser().getWatchedMovies().add(purchasedMovie);
-        setOutput(null, navigator);
+        setOutput(navigator);
     }
 }

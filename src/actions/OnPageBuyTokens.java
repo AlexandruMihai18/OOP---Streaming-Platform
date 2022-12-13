@@ -17,21 +17,33 @@ public final class OnPageBuyTokens extends Action {
 
     @Override
     public void doAction(final Navigator navigator) {
+        /**
+         * Check the features for this page
+         */
         if (!navigator.getCurrentPage().checkAction(feature)) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Convert the given String balance to a working int
+         */
         int currentBalance = Integer
                 .parseInt(navigator.getCurrentUser().getCredentials().getBalance());
         int currentTokens = navigator.getCurrentUser().getTokensCount();
         int currentCount = Integer.parseInt(count);
 
+        /**
+         * The user does not have enough balance to buy tokens
+         */
         if (currentBalance < currentCount) {
-            setOutput("Error", new Navigator());
+            setError();
             return;
         }
 
+        /**
+         * Buy tokens using balance
+         */
         currentBalance -= currentCount;
         currentTokens += currentCount;
 
