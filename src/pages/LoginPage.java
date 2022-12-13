@@ -1,6 +1,6 @@
 package pages;
 
-import helpers.ActionsEnum;
+import helpers.ActionFactory;
 
 public final class LoginPage extends Page {
     public LoginPage() {
@@ -14,6 +14,6 @@ public final class LoginPage extends Page {
 
     @Override
     public void setActions() {
-        this.getActions().add(ActionsEnum.LOGIN);
+        this.getActions().add(ActionFactory.LOGIN);
     }
 }

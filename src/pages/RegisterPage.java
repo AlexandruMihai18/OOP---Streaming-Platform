@@ -1,6 +1,6 @@
 package pages;
 
-import helpers.ActionsEnum;
+import helpers.ActionFactory;
 
 public final class RegisterPage extends Page {
     public RegisterPage() {
@@ -14,6 +14,6 @@ public final class RegisterPage extends Page {
 
     @Override
     public void setActions() {
-        this.getActions().add(ActionsEnum.REGISTER);
+        this.getActions().add(ActionFactory.REGISTER);
     }
 }

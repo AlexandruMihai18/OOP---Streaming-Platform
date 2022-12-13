@@ -1,6 +1,6 @@
 package pages;
 
-import helpers.ActionsEnum;
+import helpers.ActionFactory;
 import helpers.PageEnum;
 
 public final class MoviePage extends Page {
@@ -18,7 +18,7 @@ public final class MoviePage extends Page {
 
     @Override
     public void setActions() {
-        this.getActions().add(ActionsEnum.SEARCH);
-        this.getActions().add(ActionsEnum.FILTERS);
+        this.getActions().add(ActionFactory.SEARCH);
+        this.getActions().add(ActionFactory.FILTERS);
     }
 }

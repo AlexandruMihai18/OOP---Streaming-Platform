@@ -1,6 +1,6 @@
 package pages;
 
-import helpers.ActionsEnum;
+import helpers.ActionFactory;
 import helpers.PageEnum;
 
 public final class UpgradesPage extends Page {
@@ -17,7 +17,7 @@ public final class UpgradesPage extends Page {
 
     @Override
     public void setActions() {
-        this.getActions().add(ActionsEnum.BUY_TOKENS);
-        this.getActions().add(ActionsEnum.BUY_PREMIUM_ACCOUNT);
+        this.getActions().add(ActionFactory.BUY_TOKENS);
+        this.getActions().add(ActionFactory.BUY_PREMIUM_ACCOUNT);
     }
 }

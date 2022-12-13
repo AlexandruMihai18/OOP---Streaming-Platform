@@ -2,7 +2,7 @@ package database;
 
 import actions.Action;
 import fileio.ActionInput;
-import helpers.ActionBuilder;
+import helpers.ActionFactory;
 
 import java.util.ArrayList;
 
@@ -45,7 +45,7 @@ public final class ActionsDatabase {
      */
     public void setActions(final ArrayList<ActionInput> actions) {
         for (ActionInput action : actions) {
-            this.actions.add(ActionBuilder.buildAction(action));
+            this.actions.add(ActionFactory.createAction(action));
         }
     }
 }
