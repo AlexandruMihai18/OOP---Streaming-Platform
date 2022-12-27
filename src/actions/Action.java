@@ -18,6 +18,10 @@ public abstract class Action {
         this.type = type;
     }
 
+    public Action() {
+
+    }
+
     /**
      * Type corresponding to the sub-action
      * @return change page / on page
@@ -46,7 +50,7 @@ public abstract class Action {
      * Changes applied to the server -- key implementation for the Strategy Design Pattern
      * @param navigator currentPage, currentUser, currentMovies required for action
      */
-    public abstract void doAction(Navigator navigator);
+    public abstract void actionStrategy(Navigator navigator);
 
     /**
      * Displaying the output for a successful action

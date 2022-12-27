@@ -22,5 +22,6 @@ public final class SeeDetailsPage extends Page {
         this.getActions().add(ActionFactory.WATCH);
         this.getActions().add(ActionFactory.LIKE);
         this.getActions().add(ActionFactory.RATE_THE_MOVIE);
+        this.getActions().add(ActionFactory.SUBSCRIBE);
     }
 }

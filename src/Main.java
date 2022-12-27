@@ -12,6 +12,8 @@ public final class Main {
 
     }
 
+    public static final String OUT_PATH = "checker/resources/result/basic_";
+    public static int counter = 1;
     /**
      * Connection bridge between the tester and the server
      * @param args file names used to read and write the data
@@ -30,5 +32,6 @@ public final class Main {
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(args[1]), output);
+        objectWriter.writeValue(new File(OUT_PATH + (counter++) + ".json"), output);
     }
 }

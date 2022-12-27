@@ -23,6 +23,10 @@ public final class ActionFactory {
     public static final String RATE_THE_MOVIE = "rate";
     public static final String BUY_PREMIUM_ACCOUNT = "buy premium account";
     public static final String BUY_TOKENS = "buy tokens";
+    public static final String SUBSCRIBE = "subscribe";
+    public static final String DATABASE = "database";
+    public static final String ADD_DATABASE = "add";
+    public static final String DELETE_DATABASE = "delete";
 
     /**
      * Assess the type of the action and return a specific one
@@ -75,6 +79,22 @@ public final class ActionFactory {
                     }
                 }
             }
+           case SUBSCRIBE -> {
+                return new Subscribe(action);
+           }
+           case DATABASE -> {
+                switch (action.getFeature()) {
+                    case ADD_DATABASE -> {
+                        return new DatabaseAdd(action);
+                    }
+                    case DELETE_DATABASE -> {
+                        return new DatabaseDelete(action);
+                    }
+                    default -> {
+                        return null;
+                    }
+                }
+           }
             default -> {
                 return null;
             }

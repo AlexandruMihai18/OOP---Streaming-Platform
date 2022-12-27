@@ -6,19 +6,17 @@ import helpers.Constants;
 import server.Navigator;
 
 public final class OnPageRateMovie extends Action {
-    private String page;
     private String feature;
     private int rate;
 
     public OnPageRateMovie(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
         rate = action.getRate();
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -27,12 +25,12 @@ public final class OnPageRateMovie extends Action {
             return;
         }
 
-        Movie watchedMovie = navigator.getCurrentMovies().get(0);
+        Movie watchedMovie = navigator.getCurrentPage().getCurrentMovies().get(0);
 
         /**
          * Check if the movie has been watch
          */
-        if (!navigator.getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
+        if (!navigator.getCurrentPage().getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
             setError();
             return;
         }
@@ -40,7 +38,7 @@ public final class OnPageRateMovie extends Action {
         /**
          * Check if the movie has already been rated
          */
-        if (navigator.getCurrentUser().getRatedMovies().contains(watchedMovie)) {
+        if (navigator.getCurrentPage().getCurrentUser().getRatedMovies().contains(watchedMovie)) {
             setError();
             return;
         }
@@ -56,7 +54,7 @@ public final class OnPageRateMovie extends Action {
         /**
          * Mark the movie as rated and recalculate the rating
          */
-        navigator.getCurrentUser().getRatedMovies().add(watchedMovie);
+        navigator.getCurrentPage().getCurrentUser().getRatedMovies().add(watchedMovie);
         watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
         watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
         watchedMovie.setRating((float) watchedMovie.getTotalRating()

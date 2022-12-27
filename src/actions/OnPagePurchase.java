@@ -5,17 +5,15 @@ import fileio.ActionInput;
 import server.Navigator;
 
 public final class OnPagePurchase extends Action {
-    private String page;
     private String feature;
 
     public OnPagePurchase(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -24,12 +22,12 @@ public final class OnPagePurchase extends Action {
             return;
         }
 
-        Movie movie = navigator.getCurrentMovies().get(0);
+        Movie movie = navigator.getCurrentPage().getCurrentMovies().get(0);
 
         /**
          * Check if the movie has already been purchase
          */
-        if (navigator.getCurrentUser().getPurchasedMovies().contains(movie)) {
+        if (navigator.getCurrentPage().getCurrentUser().getPurchasedMovies().contains(movie)) {
             setError();
             return;
         }
@@ -37,18 +35,18 @@ public final class OnPagePurchase extends Action {
         /**
          * Mark the movie as purchased
          */
-        navigator.getCurrentUser().getPurchasedMovies().add(movie);
+        navigator.getCurrentPage().getCurrentUser().getPurchasedMovies().add(movie);
 
         /**
          * Buy the movie by either using tokens or using a free movie from the premium account
          */
-        if (navigator.getCurrentUser().getCredentials().getAccountType().equals("premium")
-                && navigator.getCurrentUser().getNumFreePremiumMovies() > 0) {
-            navigator.getCurrentUser().setNumFreePremiumMovies(
-                    navigator.getCurrentUser().getNumFreePremiumMovies() - 1);
+        if (navigator.getCurrentPage().getCurrentUser().getCredentials().getAccountType().equals("premium")
+                && navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() > 0) {
+            navigator.getCurrentPage().getCurrentUser().setNumFreePremiumMovies(
+                    navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() - 1);
         } else {
-            navigator.getCurrentUser().setTokensCount(
-                    navigator.getCurrentUser().getTokensCount() - 2);
+            navigator.getCurrentPage().getCurrentUser().setTokensCount(
+                    navigator.getCurrentPage().getCurrentUser().getTokensCount() - 2);
         }
 
         setOutput(navigator);

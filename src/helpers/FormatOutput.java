@@ -89,8 +89,8 @@ public final class FormatOutput {
     public static ObjectNode formatAction(final String error, final Navigator navigator) {
         ObjectNode actionNode = mapper.createObjectNode();
         actionNode.putPOJO("error", error);
-        actionNode.putPOJO("currentMoviesList", formatMovieList(navigator.getCurrentMovies()));
-        actionNode.putPOJO("currentUser", formatUser(navigator.getCurrentUser()));
+        actionNode.putPOJO("currentMoviesList", formatMovieList(navigator.getCurrentPage().getCurrentMovies()));
+        actionNode.putPOJO("currentUser", formatUser(navigator.getCurrentPage().getCurrentUser()));
         return actionNode;
     }
 }

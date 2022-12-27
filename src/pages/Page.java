@@ -1,5 +1,7 @@
 package pages;
 
+import database.Movie;
+import database.User;
 import helpers.PageEnum;
 
 import java.util.ArrayList;
@@ -7,12 +9,26 @@ import java.util.ArrayList;
 public abstract class Page {
     private ArrayList<String> nextPages;
     private ArrayList<String> actions;
+    private User currentUser;
+    private ArrayList<Movie> currentMovies;
+    private ArrayList<Movie> allMoviesFromPage;
 
     public Page() {
         nextPages = new ArrayList<>();
         actions = new ArrayList<>();
+        currentUser = null;
+        currentMovies = new ArrayList<>();
+        allMoviesFromPage = new ArrayList<>();
         setNextPages();
         setActions();
+    }
+
+    public Page(Page page) {
+        nextPages = page.getNextPages();
+        actions = page.getActions();
+        currentUser = page.getCurrentUser();
+        currentMovies = page.getCurrentMovies();
+        allMoviesFromPage = page.getAllMoviesFromPage();
     }
 
     /**
@@ -40,6 +56,30 @@ public abstract class Page {
      * Set actions available on page based on the current page name
      */
     public abstract void setActions();
+
+    public User getCurrentUser() {
+        return currentUser;
+    }
+
+    public void setCurrentUser(final User currentUser) {
+        this.currentUser = currentUser;
+    }
+
+    public ArrayList<Movie> getCurrentMovies() {
+        return currentMovies;
+    }
+
+    public void setCurrentMovies(final ArrayList<Movie> currentMovies) {
+        this.currentMovies = currentMovies;
+    }
+
+    public ArrayList<Movie> getAllMoviesFromPage() {
+        return allMoviesFromPage;
+    }
+
+    public void setAllMoviesFromPage(final ArrayList<Movie> allMoviesFromPage) {
+        this.allMoviesFromPage = allMoviesFromPage;
+    }
 
     /**
      * Check if a page follows the current one
