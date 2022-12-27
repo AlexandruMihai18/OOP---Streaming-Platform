@@ -13,7 +13,7 @@ public final class ActionInput {
     private int rate;
     private String subscribedGenre;
     private MovieInput addedMovie;
-    private String deleteMovie;
+    private String deletedMovie;
 
     public String getType() {
         return type;
@@ -111,11 +111,11 @@ public final class ActionInput {
         this.addedMovie = addedMovie;
     }
 
-    public String getDeleteMovie() {
-        return deleteMovie;
+    public String getDeletedMovie() {
+        return deletedMovie;
     }
 
-    public void setDeleteMovie(String deleteMovie) {
-        this.deleteMovie = deleteMovie;
+    public void setDeletedMovie(String deleteMovie) {
+        this.deletedMovie = deleteMovie;
     }
 }

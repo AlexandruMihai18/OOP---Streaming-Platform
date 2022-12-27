@@ -4,7 +4,7 @@ import helpers.PageEnum;
 
 public final class AuthenticatedHomepage extends Page {
     public AuthenticatedHomepage() {
-        super();
+        super(PageEnum.AUTHENTICATED_HOMEPAGE);
     }
 
     @Override

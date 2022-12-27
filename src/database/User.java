@@ -13,6 +13,7 @@ public final class User {
     private ArrayList<Movie> watchedMovies;
     private ArrayList<Movie> likedMovies;
     private ArrayList<Movie> ratedMovies;
+    private ArrayList<Movie> asynchronousMovies;
     private ArrayList<String> subscribedGenres;
     private ArrayList<Notification> notifications;
 
@@ -24,6 +25,7 @@ public final class User {
         this.watchedMovies = new ArrayList<>(user.getWatchedMovies());
         this.likedMovies = new ArrayList<>(user.getLikedMovies());
         this.ratedMovies = new ArrayList<>(user.getRatedMovies());
+        this.asynchronousMovies = new ArrayList<>(user.getAsynchronousMovies());
         this.subscribedGenres = new ArrayList<>(user.getSubscribedGenres());
         this.notifications = new ArrayList<>(user.getNotifications());
     }
@@ -36,6 +38,7 @@ public final class User {
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();
         ratedMovies = new ArrayList<>();
+        asynchronousMovies = new ArrayList<>();
         subscribedGenres = new ArrayList<>();
         notifications = new ArrayList<>();
     }
@@ -47,6 +50,7 @@ public final class User {
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();
         ratedMovies = new ArrayList<>();
+        asynchronousMovies = new ArrayList<>();
         subscribedGenres = new ArrayList<>();
         notifications = new ArrayList<>();
     }
@@ -105,6 +109,14 @@ public final class User {
 
     public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
+    }
+
+    public ArrayList<Movie> getAsynchronousMovies() {
+        return asynchronousMovies;
+    }
+
+    public void setAsynchronousMovies(ArrayList<Movie> asynchronousMovies) {
+        this.asynchronousMovies = asynchronousMovies;
     }
 
     public ArrayList<String> getSubscribedGenres() {

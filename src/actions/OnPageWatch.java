@@ -22,13 +22,21 @@ public final class OnPageWatch extends Action {
             return;
         }
 
-        Movie purchasedMovie = navigator.getCurrentPage().getCurrentMovies().get(0);
+        Movie purchasedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getPurchasedMovies(),
+                navigator.getCurrentPage().getMovieName());
 
         /**
          * Check if the movie has been purchased
          */
-        if (!navigator.getCurrentPage().getCurrentUser().getPurchasedMovies().contains(purchasedMovie)) {
+        if (purchasedMovie == null) {
             setError();
+            return;
+        }
+
+        Movie watchedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getWatchedMovies(),
+                navigator.getCurrentPage().getMovieName());
+
+        if (watchedMovie != null) {
             return;
         }
 

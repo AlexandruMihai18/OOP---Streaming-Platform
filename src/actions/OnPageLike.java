@@ -25,16 +25,23 @@ public final class OnPageLike extends Action {
         /**
          * Check if the movie has been watched
          */
-        Movie watchedMovie = navigator.getCurrentPage().getCurrentMovies().get(0);
-        if (!navigator.getCurrentPage().getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
+        Movie watchedMovie = getMovie(navigator
+                        .getCurrentPage().getCurrentUser().getWatchedMovies(),
+                navigator.getCurrentPage().getMovieName());
+
+        if (watchedMovie == null) {
             setError();
             return;
         }
 
+        Movie likedMovie = getMovie(navigator
+                        .getCurrentPage().getCurrentUser().getLikedMovies(),
+                navigator.getCurrentPage().getMovieName());
+
         /**
          * Check if the movie has already been liked
          */
-        if (navigator.getCurrentPage().getCurrentUser().getLikedMovies().contains(watchedMovie)) {
+        if (likedMovie != null) {
             setError();
             return;
         }

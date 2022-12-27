@@ -5,7 +5,7 @@ import helpers.PageEnum;
 
 public final class MoviePage extends Page {
     public MoviePage() {
-        super();
+        super(PageEnum.MOVIES_PAGE);
     }
 
     @Override

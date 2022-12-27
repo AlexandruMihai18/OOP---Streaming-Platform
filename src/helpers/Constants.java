@@ -12,4 +12,5 @@ public final class Constants {
     public static final String ERROR = "Error";
     public static final String ADD_NOTIFICATION = "ADD";
     public static final String DELETE_NOTIFICATION = "DELETE";
+    public static final String RECOMMENDATION_NOTIFICATION = "Recommendation";
 }

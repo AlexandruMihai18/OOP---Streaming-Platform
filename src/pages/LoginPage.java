@@ -1,10 +1,11 @@
 package pages;
 
 import helpers.ActionFactory;
+import helpers.PageEnum;
 
 public final class LoginPage extends Page {
     public LoginPage() {
-        super();
+        super(PageEnum.LOGIN_PAGE);
     }
 
     @Override

@@ -31,7 +31,8 @@ public final class OnPageFilters extends Action {
         /**
          * Get movies by given filters
          */
-        ArrayList<Movie> searchMovies = getMoviesByFilters(navigator.getCurrentPage().getAllMoviesFromPage());
+        ArrayList<Movie> searchMovies = getMoviesByFilters(navigator
+                .getCurrentPage().getAllMoviesFromPage());
         navigator.getCurrentPage().setCurrentMovies(searchMovies);
 
         setOutput(navigator);

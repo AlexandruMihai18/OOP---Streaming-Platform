@@ -7,18 +7,18 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class DatabaseDelete extends Action implements Notify{
+public final class DatabaseDelete extends Action implements Notify {
     private String feature;
-    private String deleteMovie;
+    private String deletedMovie;
 
     public DatabaseDelete(final ActionInput action) {
         super(action.getType());
         feature = action.getFeature();
-        deleteMovie = action.getDeleteMovie();
+        deletedMovie = action.getDeletedMovie();
     }
 
     @Override
-    public void actionStrategy(Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         Movie movie = getMovie(MoviesDatabase.getInstance().getMovies());
 
         if (movie == null) {
@@ -26,7 +26,7 @@ public final class DatabaseDelete extends Action implements Notify{
             return;
         }
 
-        Notification notification = new Notification(deleteMovie, Constants.DELETE_NOTIFICATION);
+        Notification notification = new Notification(deletedMovie, Constants.DELETE_NOTIFICATION);
 
         notifyUsers(UsersDatabase.getInstance().getUsers(), notification);
 
@@ -35,7 +35,7 @@ public final class DatabaseDelete extends Action implements Notify{
 
     public Movie getMovie(final ArrayList<Movie> movies) {
         for (Movie movie : movies) {
-            if (movie.getName().equals(this.deleteMovie)) {
+            if (movie.getName().equals(deletedMovie)) {
                 return movie;
             }
         }
@@ -43,31 +43,41 @@ public final class DatabaseDelete extends Action implements Notify{
     }
 
     @Override
-    public void notifyUsers(ArrayList<User> users, Notification notification) {
-        Movie movie = getMovie(MoviesDatabase.getInstance().getMovies());
+    public void notifyUsers(final ArrayList<User> users, final Notification notification) {
+
+        Movie movie;
 
         for (User user : users) {
-            if (user.getPurchasedMovies().contains(movie)) {
+
+            movie = getMovie(user.getPurchasedMovies(), deletedMovie);
+
+            if (movie != null) {
                 user.getPurchasedMovies().remove(movie);
                 user.getNotifications().add(notification);
                 returnTokens(user);
             }
 
-            if (user.getWatchedMovies().contains(movie)) {
+            movie = getMovie(user.getWatchedMovies(), deletedMovie);
+
+            if (movie != null) {
                 user.getWatchedMovies().remove(movie);
             }
 
-            if (user.getLikedMovies().contains(movie)) {
+            movie = getMovie(user.getLikedMovies(), deletedMovie);
+
+            if (movie != null) {
                 user.getLikedMovies().remove(movie);
             }
 
-            if (user.getRatedMovies().contains(movie)) {
+            movie = getMovie(user.getRatedMovies(), deletedMovie);
+
+            if (movie != null) {
                 user.getRatedMovies().remove(movie);
             }
         }
     }
 
-    public void returnTokens(User user) {
+    public void returnTokens(final User user) {
         if (user.getCredentials().getAccountType().equals(Constants.PREMIUM)) {
             user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() + 1);
         } else {

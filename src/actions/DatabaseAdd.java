@@ -8,7 +8,7 @@ import server.Navigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public final class DatabaseAdd extends Action implements Notify{
+public final class DatabaseAdd extends Action implements Notify {
     private String feature;
     private Movie addedMovie;
 
@@ -25,11 +25,20 @@ public final class DatabaseAdd extends Action implements Notify{
             return;
         }
 
-        Notification notification = new Notification(addedMovie.getName(), Constants.ADD_NOTIFICATION);
+        Notification notification = new Notification(addedMovie.getName(),
+                Constants.ADD_NOTIFICATION);
 
         notifyUsers(UsersDatabase.getInstance().getUsers(), notification);
+
+        MoviesDatabase.getInstance().getMovies().add(addedMovie);
     }
 
+    /**
+     * Checking if a movie is part of an array list
+     * @param movies array of movies to check
+     * @param checkedMovie the inquired movie
+     * @return true -- the movie is inside the array, false -- otherwise
+     */
     public boolean checkMovie(final ArrayList<Movie> movies, final Movie checkedMovie) {
         for (Movie movie : movies) {
             if (checkedMovie.equals(movie)) {
@@ -40,7 +49,7 @@ public final class DatabaseAdd extends Action implements Notify{
     }
 
     @Override
-    public void notifyUsers(ArrayList<User> users, Notification notification) {
+    public void notifyUsers(final ArrayList<User> users, final Notification notification) {
         for (User user : users) {
             if (addedMovie.getCountriesBanned().contains(user.getCredentials().getCountry())) {
                 continue;

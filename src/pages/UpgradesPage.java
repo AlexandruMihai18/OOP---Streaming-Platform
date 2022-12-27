@@ -5,7 +5,7 @@ import helpers.PageEnum;
 
 public final class UpgradesPage extends Page {
     public UpgradesPage() {
-        super();
+        super(PageEnum.UPGRADES_PAGE);
     }
 
     @Override

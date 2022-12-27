@@ -29,6 +29,10 @@ public final class ChangePageAction extends Action {
 
         Page previousPage = navigator.getCurrentPage();
 
+        if (navigator.getCurrentPage().getCurrentUser() != null) {
+            navigator.getAllPages().add(previousPage);
+        }
+
         /**
          * Assign the new page and movies displayed
          */
@@ -45,18 +49,17 @@ public final class ChangePageAction extends Action {
             navigator.getCurrentPage().setCurrentUser(null);
         }
 
+        Page currentPage = navigator.getCurrentPage();
+
         /**
          * Change to movies page -- display all available movies
          */
         if (page.equals(PageEnum.MOVIES_PAGE)) {
-            navigator.getCurrentPage().setCurrentMovies(getVisibleMovies(MoviesDatabase.getInstance().getMovies(),
-                    navigator.getCurrentPage().getCurrentUser().getCredentials().getCountry()));
-            navigator.getCurrentPage().setAllMoviesFromPage(navigator.getCurrentPage().getCurrentMovies());
-            setOutput(navigator);
-        }
+            currentPage.setCurrentMovies(getVisibleMovies(MoviesDatabase.getInstance().getMovies(),
+                    currentPage.getCurrentUser().getCredentials().getCountry()));
 
-        if (!page.equals(PageEnum.UNAUTHENTICATED_HOMEPAGE) && !page.equals(PageEnum.LOGIN_PAGE) && !page.equals(PageEnum.REGISTER_PAGE)) {
-            navigator.getAllPages().add(navigator.getCurrentPage());
+            currentPage.setAllMoviesFromPage(currentPage.getCurrentMovies());
+            setOutput(navigator);
         }
     }
 

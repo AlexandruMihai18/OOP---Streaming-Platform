@@ -27,7 +27,7 @@ public final class ChangePageMovieAction extends Action {
             return;
         }
 
-        Movie currentMovie = getMovie(navigator.getCurrentPage().getCurrentMovies());
+        Movie currentMovie = getMovie(navigator.getCurrentPage().getCurrentMovies(), movie);
 
         /**
          * Display error if the searched movie does not exist
@@ -39,25 +39,17 @@ public final class ChangePageMovieAction extends Action {
 
         Page previousPage = navigator.getCurrentPage();
 
+        /**
+         * Adding the previous page (movie page) to allPages array for back feature
+         */
+        navigator.getAllPages().add(previousPage);
+
         navigator.setCurrentPage(navigator.getCurrentPage().goToNextPage(page));
         navigator.getCurrentPage().setCurrentUser(previousPage.getCurrentUser());
+        navigator.getCurrentPage().setMovieName(movie);
         navigator.getCurrentPage().setCurrentMovies(new ArrayList<>());
         navigator.getCurrentPage().getCurrentMovies().add(currentMovie);
 
         setOutput(navigator);
-    }
-
-    /**
-     * Display movie information based on name
-     * @param movies available movies to a user
-     * @return movie based on name
-     */
-    public Movie getMovie(final ArrayList<Movie> movies) {
-        for (Movie movie : movies) {
-            if (movie.getName().equals(this.movie)) {
-                return movie;
-            }
-        }
-        return null;
     }
 }

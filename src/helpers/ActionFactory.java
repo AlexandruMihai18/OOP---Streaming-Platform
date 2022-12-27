@@ -27,6 +27,7 @@ public final class ActionFactory {
     public static final String DATABASE = "database";
     public static final String ADD_DATABASE = "add";
     public static final String DELETE_DATABASE = "delete";
+    public static final String BACK = "back";
 
     /**
      * Assess the type of the action and return a specific one
@@ -94,6 +95,9 @@ public final class ActionFactory {
                         return null;
                     }
                 }
+           }
+           case BACK -> {
+                return new Back(action);
            }
             default -> {
                 return null;

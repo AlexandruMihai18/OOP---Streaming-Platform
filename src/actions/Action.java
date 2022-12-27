@@ -1,9 +1,12 @@
 package actions;
 
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import database.Movie;
 import helpers.Constants;
 import helpers.FormatOutput;
 import server.Navigator;
+
+import java.util.ArrayList;
 
 /**
  * Strategy Pattern class designed to identify each type of possible action.
@@ -65,6 +68,21 @@ public abstract class Action {
      */
     public void setError() {
         outputNode = FormatOutput.formatAction(Constants.ERROR, new Navigator());
+    }
+
+    /**
+     * Display movie information based on name
+     * @param movies available movies to a user
+     * @param name used name to identify the movie
+     * @return movie based on name
+     */
+    public Movie getMovie(final ArrayList<Movie> movies, final String name) {
+        for (Movie movie : movies) {
+            if (movie.getName().equals(name)) {
+                return movie;
+            }
+        }
+        return null;
     }
 
 }

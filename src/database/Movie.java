@@ -7,7 +7,7 @@ import java.util.List;
 
 public final class Movie {
     private String name;
-    private int year;
+    private String year;
     private int duration;
     private ArrayList<String> genres;
     private ArrayList<String> actors;
@@ -16,6 +16,7 @@ public final class Movie {
     private float rating;
     private int numRatings;
     private int totalRating;
+    private int personalRating;
 
     public Movie(final Movie movie) {
         name = movie.getName();
@@ -28,6 +29,7 @@ public final class Movie {
         rating = movie.getRating();
         numRatings = movie.getNumRatings();
         totalRating = movie.getTotalRating();
+        personalRating = movie.getPersonalRating();
     }
 
     public Movie(final MovieInput movie) {
@@ -41,6 +43,7 @@ public final class Movie {
         rating = 0;
         numRatings = 0;
         totalRating = 0;
+        personalRating = 0;
     }
 
     public String getName() {
@@ -51,11 +54,11 @@ public final class Movie {
         this.name = name;
     }
 
-    public int getYear() {
+    public String getYear() {
         return year;
     }
 
-    public void setYear(final int year) {
+    public void setYear(final String year) {
         this.year = year;
     }
 
@@ -123,6 +126,14 @@ public final class Movie {
         this.totalRating = totalRating;
     }
 
+    public int getPersonalRating() {
+        return personalRating;
+    }
+
+    public void setPersonalRating(final int personalRating) {
+        this.personalRating = personalRating;
+    }
+
     /**
      * Comparing 2 movies based on their rating
      * @param o generic object used for comparison
@@ -145,6 +156,12 @@ public final class Movie {
         Movie movie = (Movie) o;
 
         return Integer.compare(duration, movie.getDuration());
+    }
+
+    public int compareByNumLikes(final Object o) {
+        Movie movie = (Movie) o;
+
+        return -Integer.compare(numLikes, movie.getNumLikes());
     }
 
     /**
