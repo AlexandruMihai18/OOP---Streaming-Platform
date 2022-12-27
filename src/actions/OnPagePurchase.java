@@ -22,15 +22,19 @@ public final class OnPagePurchase extends Action {
             return;
         }
 
-        Movie movie = navigator.getCurrentPage().getCurrentMovies().get(0);
+        Movie moviePurchased = getMovie(navigator.getCurrentPage().getCurrentUser().getPurchasedMovies(),
+                navigator.getCurrentPage().getMovieName());
 
         /**
          * Check if the movie has already been purchase
          */
-        if (navigator.getCurrentPage().getCurrentUser().getPurchasedMovies().contains(movie)) {
+        if (moviePurchased != null) {
             setError();
             return;
         }
+
+        Movie movie = getMovie(navigator.getCurrentPage().getCurrentMovies(),
+                navigator.getCurrentPage().getMovieName());
 
         /**
          * Mark the movie as purchased
@@ -40,8 +44,7 @@ public final class OnPagePurchase extends Action {
         /**
          * Buy the movie by either using tokens or using a free movie from the premium account
          */
-        if (navigator.getCurrentPage().getCurrentUser().getCredentials().getAccountType().equals("premium")
-                && navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() > 0) {
+        if (navigator.getCurrentPage().getCurrentUser().getCredentials().getAccountType().equals("premium") && navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() > 0) {
             navigator.getCurrentPage().getCurrentUser().setNumFreePremiumMovies(
                     navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() - 1);
         } else {

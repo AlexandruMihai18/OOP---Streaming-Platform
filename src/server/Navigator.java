@@ -28,7 +28,7 @@ public final class Navigator {
         return allPages;
     }
 
-    public void setAllPages(ArrayList<Page> allPages) {
+    public void setAllPages(final ArrayList<Page> allPages) {
         this.allPages = allPages;
     }
 
@@ -43,6 +43,7 @@ public final class Navigator {
         if (currentPage.getCurrentUser() != null && currentPage.getCurrentUser().getCredentials().getAccountType().equals("premium")) {
             Action lastAction = new Recommendation();
             lastAction.actionStrategy(this);
+            ActionsDatabase.getInstance().getActions().add(lastAction);
         }
     }
 }

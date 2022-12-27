@@ -61,6 +61,7 @@ public final class FormatOutput {
         userNode.putPOJO("watchedMovies", formatMovieList(deepCopyUser.getWatchedMovies()));
         userNode.putPOJO("likedMovies", formatMovieList(deepCopyUser.getLikedMovies()));
         userNode.putPOJO("ratedMovies", formatMovieList(deepCopyUser.getRatedMovies()));
+        userNode.putPOJO("notifications", deepCopyUser.getNotifications());
         return userNode;
     }
 
@@ -71,6 +72,10 @@ public final class FormatOutput {
      */
     public static ArrayNode formatMovieList(final ArrayList<Movie> movies) {
         ArrayNode moviesNode = mapper.createArrayNode();
+
+        if (movies == null) {
+            return null;
+        }
 
         for (Movie movie : movies) {
             moviesNode.add(formatMovie(movie));
@@ -89,7 +94,8 @@ public final class FormatOutput {
     public static ObjectNode formatAction(final String error, final Navigator navigator) {
         ObjectNode actionNode = mapper.createObjectNode();
         actionNode.putPOJO("error", error);
-        actionNode.putPOJO("currentMoviesList", formatMovieList(navigator.getCurrentPage().getCurrentMovies()));
+        actionNode.putPOJO("currentMoviesList", formatMovieList(navigator.getCurrentPage()
+                .getCurrentMovies()));
         actionNode.putPOJO("currentUser", formatUser(navigator.getCurrentPage().getCurrentUser()));
         return actionNode;
     }

@@ -25,20 +25,13 @@ public final class OnPageRateMovie extends Action {
             return;
         }
 
-        Movie watchedMovie = navigator.getCurrentPage().getCurrentMovies().get(0);
+        Movie watchedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getWatchedMovies(),
+                navigator.getCurrentPage().getMovieName());
 
         /**
          * Check if the movie has been watch
          */
-        if (!navigator.getCurrentPage().getCurrentUser().getWatchedMovies().contains(watchedMovie)) {
-            setError();
-            return;
-        }
-
-        /**
-         * Check if the movie has already been rated
-         */
-        if (navigator.getCurrentPage().getCurrentUser().getRatedMovies().contains(watchedMovie)) {
+        if (watchedMovie == null) {
             setError();
             return;
         }
@@ -51,14 +44,41 @@ public final class OnPageRateMovie extends Action {
             return;
         }
 
+        Movie ratedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getRatedMovies(),
+                navigator.getCurrentPage().getMovieName());
+
+        Movie asynchronousMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getAsynchronousMovies(),
+                navigator.getCurrentPage().getMovieName());
+
+        /**
+         * Check if the movie has already been rated and adjusting the rating
+         */
+        if (asynchronousMovie != null) {
+            ratedMovie.setTotalRating(ratedMovie.getTotalRating() - asynchronousMovie.getPersonalRating());
+            asynchronousMovie.setPersonalRating(rate);
+            ratedMovie.setTotalRating(ratedMovie.getTotalRating() + asynchronousMovie.getPersonalRating());
+            ratedMovie.setRating((float) ratedMovie.getTotalRating()
+                    / (float) ratedMovie.getNumRatings());
+
+            setOutput(navigator);
+
+            return;
+        }
+
         /**
          * Mark the movie as rated and recalculate the rating
          */
-        navigator.getCurrentPage().getCurrentUser().getRatedMovies().add(watchedMovie);
+
         watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
         watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
         watchedMovie.setRating((float) watchedMovie.getTotalRating()
                 / (float) watchedMovie.getNumRatings());
+
+        navigator.getCurrentPage().getCurrentUser().getRatedMovies().add(watchedMovie);
+
+        Movie newAsynchronousMovie = new Movie(watchedMovie);
+        newAsynchronousMovie.setPersonalRating(rate);
+        navigator.getCurrentPage().getCurrentUser().getAsynchronousMovies().add(newAsynchronousMovie);
 
         setOutput(navigator);
     }

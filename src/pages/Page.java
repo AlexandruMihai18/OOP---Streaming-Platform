@@ -7,13 +7,16 @@ import helpers.PageEnum;
 import java.util.ArrayList;
 
 public abstract class Page {
+    private String pageName;
     private ArrayList<String> nextPages;
     private ArrayList<String> actions;
     private User currentUser;
     private ArrayList<Movie> currentMovies;
     private ArrayList<Movie> allMoviesFromPage;
+    private String movieName;
 
-    public Page() {
+    public Page(final String pageName) {
+        this.pageName = pageName;
         nextPages = new ArrayList<>();
         actions = new ArrayList<>();
         currentUser = null;
@@ -23,12 +26,20 @@ public abstract class Page {
         setActions();
     }
 
-    public Page(Page page) {
+    public Page(final Page page) {
         nextPages = page.getNextPages();
         actions = page.getActions();
         currentUser = page.getCurrentUser();
         currentMovies = page.getCurrentMovies();
         allMoviesFromPage = page.getAllMoviesFromPage();
+    }
+
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(final String pageName) {
+        this.pageName = pageName;
     }
 
     /**
@@ -79,6 +90,14 @@ public abstract class Page {
 
     public void setAllMoviesFromPage(final ArrayList<Movie> allMoviesFromPage) {
         this.allMoviesFromPage = allMoviesFromPage;
+    }
+
+    public String getMovieName() {
+        return movieName;
+    }
+
+    public void setMovieName(final String movieName) {
+        this.movieName = movieName;
     }
 
     /**

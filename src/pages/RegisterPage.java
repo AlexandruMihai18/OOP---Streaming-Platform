@@ -1,10 +1,11 @@
 package pages;
 
 import helpers.ActionFactory;
+import helpers.PageEnum;
 
 public final class RegisterPage extends Page {
     public RegisterPage() {
-        super();
+        super(PageEnum.REGISTER_PAGE);
     }
 
     @Override

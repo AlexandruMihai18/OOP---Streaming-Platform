@@ -26,8 +26,8 @@ public final class OnPageBuyTokens extends Action {
         /**
          * Convert the given String balance to a working int
          */
-        int currentBalance = Integer
-                .parseInt(navigator.getCurrentPage().getCurrentUser().getCredentials().getBalance());
+        int currentBalance = Integer.parseInt(navigator
+                .getCurrentPage().getCurrentUser().getCredentials().getBalance());
         int currentTokens = navigator.getCurrentPage().getCurrentUser().getTokensCount();
         int currentCount = Integer.parseInt(count);
 
@@ -45,7 +45,8 @@ public final class OnPageBuyTokens extends Action {
         currentBalance -= currentCount;
         currentTokens += currentCount;
 
-        navigator.getCurrentPage().getCurrentUser().getCredentials().setBalance(Integer.toString(currentBalance));
+        navigator.getCurrentPage().getCurrentUser().getCredentials()
+                .setBalance(Integer.toString(currentBalance));
         navigator.getCurrentPage().getCurrentUser().setTokensCount(currentTokens);
     }
 }

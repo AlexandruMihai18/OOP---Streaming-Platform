@@ -4,8 +4,9 @@ import helpers.ActionFactory;
 import helpers.PageEnum;
 
 public final class SeeDetailsPage extends Page {
+
     public SeeDetailsPage() {
-        super();
+        super(PageEnum.SEE_DETAILS_PAGE);
     }
 
     @Override
