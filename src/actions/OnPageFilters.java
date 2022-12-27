@@ -9,19 +9,17 @@ import server.Navigator;
 import java.util.ArrayList;
 
 public final class OnPageFilters extends Action {
-    private String page;
     private String feature;
     private Filters filters;
 
     public OnPageFilters(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
         filters = new Filters(action.getFilters());
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -33,8 +31,8 @@ public final class OnPageFilters extends Action {
         /**
          * Get movies by given filters
          */
-        ArrayList<Movie> searchMovies = getMoviesByFilters(navigator.getAllMoviesFromPage());
-        navigator.setCurrentMovies(searchMovies);
+        ArrayList<Movie> searchMovies = getMoviesByFilters(navigator.getCurrentPage().getAllMoviesFromPage());
+        navigator.getCurrentPage().setCurrentMovies(searchMovies);
 
         setOutput(navigator);
     }

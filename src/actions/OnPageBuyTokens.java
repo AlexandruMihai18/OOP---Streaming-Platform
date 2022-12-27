@@ -4,19 +4,17 @@ import fileio.ActionInput;
 import server.Navigator;
 
 public final class OnPageBuyTokens extends Action {
-    private String page;
     private String feature;
     private String count;
 
     public OnPageBuyTokens(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
         count = action.getCount();
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -29,8 +27,8 @@ public final class OnPageBuyTokens extends Action {
          * Convert the given String balance to a working int
          */
         int currentBalance = Integer
-                .parseInt(navigator.getCurrentUser().getCredentials().getBalance());
-        int currentTokens = navigator.getCurrentUser().getTokensCount();
+                .parseInt(navigator.getCurrentPage().getCurrentUser().getCredentials().getBalance());
+        int currentTokens = navigator.getCurrentPage().getCurrentUser().getTokensCount();
         int currentCount = Integer.parseInt(count);
 
         /**
@@ -47,7 +45,7 @@ public final class OnPageBuyTokens extends Action {
         currentBalance -= currentCount;
         currentTokens += currentCount;
 
-        navigator.getCurrentUser().getCredentials().setBalance(Integer.toString(currentBalance));
-        navigator.getCurrentUser().setTokensCount(currentTokens);
+        navigator.getCurrentPage().getCurrentUser().getCredentials().setBalance(Integer.toString(currentBalance));
+        navigator.getCurrentPage().getCurrentUser().setTokensCount(currentTokens);
     }
 }

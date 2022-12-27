@@ -7,19 +7,17 @@ import server.Navigator;
 import java.util.ArrayList;
 
 public final class OnPageSearch extends Action {
-    private String page;
     private String feature;
     private String startsWith;
 
     public OnPageSearch(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
         startsWith = action.getStartsWith();
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -28,8 +26,8 @@ public final class OnPageSearch extends Action {
             return;
         }
 
-        ArrayList<Movie> searchMovies = getMovies(navigator.getAllMoviesFromPage());
-        navigator.setCurrentMovies(searchMovies);
+        ArrayList<Movie> searchMovies = getMovies(navigator.getCurrentPage().getAllMoviesFromPage());
+        navigator.getCurrentPage().setCurrentMovies(searchMovies);
 
         setOutput(navigator);
     }

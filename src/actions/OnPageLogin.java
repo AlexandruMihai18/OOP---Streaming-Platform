@@ -19,7 +19,7 @@ public final class OnPageLogin extends Action {
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -41,8 +41,8 @@ public final class OnPageLogin extends Action {
         /**
          * Log in action - mark the currentUser
          */
-        navigator.setCurrentUser(newUser);
         navigator.setCurrentPage(new AuthenticatedHomepage());
+        navigator.getCurrentPage().setCurrentUser(newUser);
         setOutput(navigator);
     }
 

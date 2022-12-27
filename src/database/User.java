@@ -13,6 +13,8 @@ public final class User {
     private ArrayList<Movie> watchedMovies;
     private ArrayList<Movie> likedMovies;
     private ArrayList<Movie> ratedMovies;
+    private ArrayList<String> subscribedGenres;
+    private ArrayList<Notification> notifications;
 
     public User(final User user) {
         this.credentials = new Credentials(user.getCredentials());
@@ -22,6 +24,8 @@ public final class User {
         this.watchedMovies = new ArrayList<>(user.getWatchedMovies());
         this.likedMovies = new ArrayList<>(user.getLikedMovies());
         this.ratedMovies = new ArrayList<>(user.getRatedMovies());
+        this.subscribedGenres = new ArrayList<>(user.getSubscribedGenres());
+        this.notifications = new ArrayList<>(user.getNotifications());
     }
 
     public User(final Credentials credentials) {
@@ -32,6 +36,8 @@ public final class User {
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();
         ratedMovies = new ArrayList<>();
+        subscribedGenres = new ArrayList<>();
+        notifications = new ArrayList<>();
     }
     public User(final UserInput user) {
         credentials = new Credentials(user.getCredentials());
@@ -41,6 +47,8 @@ public final class User {
         watchedMovies = new ArrayList<>();
         likedMovies = new ArrayList<>();
         ratedMovies = new ArrayList<>();
+        subscribedGenres = new ArrayList<>();
+        notifications = new ArrayList<>();
     }
 
     public Credentials getCredentials() {
@@ -97,5 +105,21 @@ public final class User {
 
     public void setRatedMovies(final ArrayList<Movie> ratedMovies) {
         this.ratedMovies = ratedMovies;
+    }
+
+    public ArrayList<String> getSubscribedGenres() {
+        return subscribedGenres;
+    }
+
+    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+        this.subscribedGenres = subscribedGenres;
+    }
+
+    public ArrayList<Notification> getNotifications() {
+        return notifications;
+    }
+
+    public void setNotifications(ArrayList<Notification> notifications) {
+        this.notifications = notifications;
     }
 }

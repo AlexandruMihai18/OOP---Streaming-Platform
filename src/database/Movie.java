@@ -3,6 +3,7 @@ package database;
 import fileio.MovieInput;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public final class Movie {
     private String name;
@@ -151,7 +152,7 @@ public final class Movie {
      * @param actors list of actors required
      * @return true - the film contains those actors, false - otherwise
      */
-    public boolean checkMovieByActors(final ArrayList<String> actors) {
+    public boolean checkMovieByActors(final List<String> actors) {
         for (String actor : actors) {
             if (!this.actors.contains(actor)) {
                 return false;
@@ -165,12 +166,18 @@ public final class Movie {
      * @param genres list of genres required
      * @return true - the film contains those actors, false - otherwise
      */
-    public boolean checkMovieByGenre(final ArrayList<String> genres) {
+    public boolean checkMovieByGenre(final List<String> genres) {
         for (String genre : genres) {
             if (!this.genres.contains(genre)) {
                 return false;
             }
         }
         return true;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Movie movie = (Movie) obj;
+        return this.getName().equals(movie.getName());
     }
 }

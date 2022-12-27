@@ -1,9 +1,8 @@
 package server;
 
 import actions.Action;
+import actions.Recommendation;
 import database.ActionsDatabase;
-import database.Movie;
-import database.User;
 import pages.Page;
 import pages.UnauthenticatedHomepage;
 
@@ -11,20 +10,10 @@ import java.util.ArrayList;
 
 public final class Navigator {
     private Page currentPage = new UnauthenticatedHomepage();
-    private ArrayList<Movie> currentMovies = new ArrayList<>();
-    private ArrayList<Movie> allMoviesFromPage = new ArrayList<>();
-    private User currentUser = null;
+    private ArrayList<Page> allPages = new ArrayList<>();
 
     public Navigator() {
 
-    }
-
-    public User getCurrentUser() {
-        return currentUser;
-    }
-
-    public void setCurrentUser(final User currentUser) {
-        this.currentUser = currentUser;
     }
 
     public Page getCurrentPage() {
@@ -35,20 +24,12 @@ public final class Navigator {
         this.currentPage = currentPage;
     }
 
-    public ArrayList<Movie> getCurrentMovies() {
-        return currentMovies;
+    public ArrayList<Page> getAllPages() {
+        return allPages;
     }
 
-    public void setCurrentMovies(final ArrayList<Movie> currentMovies) {
-        this.currentMovies = currentMovies;
-    }
-
-    public ArrayList<Movie> getAllMoviesFromPage() {
-        return allMoviesFromPage;
-    }
-
-    public void setAllMoviesFromPage(final ArrayList<Movie> allMoviesFromPage) {
-        this.allMoviesFromPage = allMoviesFromPage;
+    public void setAllPages(ArrayList<Page> allPages) {
+        this.allPages = allPages;
     }
 
     /**
@@ -56,7 +37,12 @@ public final class Navigator {
      */
     public void startNavigation() {
         for (Action action : ActionsDatabase.getInstance().getActions()) {
-            action.doAction(this);
+            action.actionStrategy(this);
+        }
+
+        if (currentPage.getCurrentUser() != null && currentPage.getCurrentUser().getCredentials().getAccountType().equals("premium")) {
+            Action lastAction = new Recommendation();
+            lastAction.actionStrategy(this);
         }
     }
 }

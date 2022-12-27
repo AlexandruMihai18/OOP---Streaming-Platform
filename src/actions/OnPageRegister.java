@@ -9,19 +9,17 @@ import pages.UnauthenticatedHomepage;
 import server.Navigator;
 
 public final class OnPageRegister extends Action {
-    private String page;
     private String feature;
     private Credentials credentials;
 
     public OnPageRegister(final ActionInput action) {
         super(action.getType());
-        page = action.getPage();
         feature = action.getFeature();
         credentials = new Credentials(action.getCredentials());
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check the features for this page
          */
@@ -47,7 +45,7 @@ public final class OnPageRegister extends Action {
         User user = new User(credentials);
         UsersDatabase.getInstance().getUsers().add(user);
         navigator.setCurrentPage(new AuthenticatedHomepage());
-        navigator.setCurrentUser(user);
+        navigator.getCurrentPage().setCurrentUser(user);
         setOutput(navigator);
     }
 

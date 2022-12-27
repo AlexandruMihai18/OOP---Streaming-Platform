@@ -2,6 +2,7 @@ package actions;
 
 import database.Movie;
 import fileio.ActionInput;
+import pages.Page;
 import server.Navigator;
 
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public final class ChangePageMovieAction extends Action {
     }
 
     @Override
-    public void doAction(final Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         /**
          * Check if the page is valid
          */
@@ -26,7 +27,7 @@ public final class ChangePageMovieAction extends Action {
             return;
         }
 
-        Movie currentMovie = getMovie(navigator.getCurrentMovies());
+        Movie currentMovie = getMovie(navigator.getCurrentPage().getCurrentMovies());
 
         /**
          * Display error if the searched movie does not exist
@@ -36,9 +37,12 @@ public final class ChangePageMovieAction extends Action {
             return;
         }
 
+        Page previousPage = navigator.getCurrentPage();
+
         navigator.setCurrentPage(navigator.getCurrentPage().goToNextPage(page));
-        navigator.setCurrentMovies(new ArrayList<>());
-        navigator.getCurrentMovies().add(currentMovie);
+        navigator.getCurrentPage().setCurrentUser(previousPage.getCurrentUser());
+        navigator.getCurrentPage().setCurrentMovies(new ArrayList<>());
+        navigator.getCurrentPage().getCurrentMovies().add(currentMovie);
 
         setOutput(navigator);
     }
