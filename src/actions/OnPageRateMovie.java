@@ -1,11 +1,12 @@
 package actions;
 
 import database.Movie;
+import database.User;
 import fileio.ActionInput;
 import helpers.Constants;
 import server.Navigator;
 
-public final class OnPageRateMovie extends Action {
+public final class OnPageRateMovie extends ActionStrategy {
     private String feature;
     private int rate;
 
@@ -25,7 +26,9 @@ public final class OnPageRateMovie extends Action {
             return;
         }
 
-        Movie watchedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getWatchedMovies(),
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
+        Movie watchedMovie = getMovie(currentUser.getWatchedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         /**
@@ -44,19 +47,21 @@ public final class OnPageRateMovie extends Action {
             return;
         }
 
-        Movie ratedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getRatedMovies(),
+        Movie ratedMovie = getMovie(currentUser.getRatedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
-        Movie asynchronousMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getAsynchronousMovies(),
+        Movie asynchronousMovie = getMovie(currentUser.getAsynchronousMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         /**
          * Check if the movie has already been rated and adjusting the rating
          */
         if (asynchronousMovie != null) {
-            ratedMovie.setTotalRating(ratedMovie.getTotalRating() - asynchronousMovie.getPersonalRating());
+            int oldRate = asynchronousMovie.getPersonalRating();
+
+            ratedMovie.setTotalRating(ratedMovie.getTotalRating() - oldRate);
             asynchronousMovie.setPersonalRating(rate);
-            ratedMovie.setTotalRating(ratedMovie.getTotalRating() + asynchronousMovie.getPersonalRating());
+            ratedMovie.setTotalRating(ratedMovie.getTotalRating() + rate);
             ratedMovie.setRating((float) ratedMovie.getTotalRating()
                     / (float) ratedMovie.getNumRatings());
 
@@ -68,17 +73,20 @@ public final class OnPageRateMovie extends Action {
         /**
          * Mark the movie as rated and recalculate the rating
          */
-
         watchedMovie.setNumRatings(watchedMovie.getNumRatings() + 1);
         watchedMovie.setTotalRating(watchedMovie.getTotalRating() + rate);
         watchedMovie.setRating((float) watchedMovie.getTotalRating()
                 / (float) watchedMovie.getNumRatings());
 
-        navigator.getCurrentPage().getCurrentUser().getRatedMovies().add(watchedMovie);
+        currentUser.getRatedMovies().add(watchedMovie);
 
+        /**
+         * Adding the movie to an asynchronous rating list to be able to change the
+         * rating at a later update
+         */
         Movie newAsynchronousMovie = new Movie(watchedMovie);
         newAsynchronousMovie.setPersonalRating(rate);
-        navigator.getCurrentPage().getCurrentUser().getAsynchronousMovies().add(newAsynchronousMovie);
+        currentUser.getAsynchronousMovies().add(newAsynchronousMovie);
 
         setOutput(navigator);
     }

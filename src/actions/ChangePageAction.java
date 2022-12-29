@@ -9,7 +9,7 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class ChangePageAction extends Action {
+public final class ChangePageAction extends ActionStrategy {
     private String page;
 
     public ChangePageAction(final ActionInput action) {

@@ -1,10 +1,11 @@
 package actions;
 
 import database.Movie;
+import database.User;
 import fileio.ActionInput;
 import server.Navigator;
 
-public final class OnPageWatch extends Action {
+public final class OnPageWatch extends ActionStrategy {
     private String feature;
 
     public OnPageWatch(final ActionInput action) {
@@ -22,7 +23,9 @@ public final class OnPageWatch extends Action {
             return;
         }
 
-        Movie purchasedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getPurchasedMovies(),
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
+        Movie purchasedMovie = getMovie(currentUser.getPurchasedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         /**
@@ -33,14 +36,14 @@ public final class OnPageWatch extends Action {
             return;
         }
 
-        Movie watchedMovie = getMovie(navigator.getCurrentPage().getCurrentUser().getWatchedMovies(),
+        Movie watchedMovie = getMovie(currentUser.getWatchedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         if (watchedMovie != null) {
             return;
         }
 
-        navigator.getCurrentPage().getCurrentUser().getWatchedMovies().add(purchasedMovie);
+        currentUser.getWatchedMovies().add(purchasedMovie);
         setOutput(navigator);
     }
 }

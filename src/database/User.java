@@ -115,7 +115,7 @@ public final class User {
         return asynchronousMovies;
     }
 
-    public void setAsynchronousMovies(ArrayList<Movie> asynchronousMovies) {
+    public void setAsynchronousMovies(final ArrayList<Movie> asynchronousMovies) {
         this.asynchronousMovies = asynchronousMovies;
     }
 
@@ -123,7 +123,7 @@ public final class User {
         return subscribedGenres;
     }
 
-    public void setSubscribedGenres(ArrayList<String> subscribedGenres) {
+    public void setSubscribedGenres(final ArrayList<String> subscribedGenres) {
         this.subscribedGenres = subscribedGenres;
     }
 
@@ -131,7 +131,7 @@ public final class User {
         return notifications;
     }
 
-    public void setNotifications(ArrayList<Notification> notifications) {
+    public void setNotifications(final ArrayList<Notification> notifications) {
         this.notifications = notifications;
     }
 }

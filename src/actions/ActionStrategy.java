@@ -13,15 +13,15 @@ import java.util.ArrayList;
  * The doAction method is defined as abstract and implemented accordingly to
  * each algorithm needs in order to change the navigator.
  */
-public abstract class Action {
+public abstract class ActionStrategy {
     private String type;
     private ObjectNode outputNode = null;
 
-    public Action(final String type) {
+    public ActionStrategy(final String type) {
         this.type = type;
     }
 
-    public Action() {
+    public ActionStrategy() {
 
     }
 

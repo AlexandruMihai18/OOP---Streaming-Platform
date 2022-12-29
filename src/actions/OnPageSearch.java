@@ -6,7 +6,7 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class OnPageSearch extends Action {
+public final class OnPageSearch extends ActionStrategy {
     private String feature;
     private String startsWith;
 

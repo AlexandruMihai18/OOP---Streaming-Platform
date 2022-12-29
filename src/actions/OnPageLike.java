@@ -1,10 +1,11 @@
 package actions;
 
 import database.Movie;
+import database.User;
 import fileio.ActionInput;
 import server.Navigator;
 
-public final class OnPageLike extends Action {
+public final class OnPageLike extends ActionStrategy {
     private String feature;
 
     public OnPageLike(final ActionInput action) {
@@ -22,11 +23,12 @@ public final class OnPageLike extends Action {
             return;
         }
 
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
         /**
          * Check if the movie has been watched
          */
-        Movie watchedMovie = getMovie(navigator
-                        .getCurrentPage().getCurrentUser().getWatchedMovies(),
+        Movie watchedMovie = getMovie(currentUser.getWatchedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         if (watchedMovie == null) {
@@ -34,8 +36,7 @@ public final class OnPageLike extends Action {
             return;
         }
 
-        Movie likedMovie = getMovie(navigator
-                        .getCurrentPage().getCurrentUser().getLikedMovies(),
+        Movie likedMovie = getMovie(currentUser.getLikedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         /**
@@ -49,7 +50,7 @@ public final class OnPageLike extends Action {
         /**
          * Mark the movie as liked
          */
-        navigator.getCurrentPage().getCurrentUser().getLikedMovies().add(watchedMovie);
+        currentUser.getLikedMovies().add(watchedMovie);
         watchedMovie.setNumLikes(watchedMovie.getNumLikes() + 1);
 
         setOutput(navigator);

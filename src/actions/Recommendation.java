@@ -9,22 +9,22 @@ import server.Navigator;
 
 import java.util.*;
 
-public final class Recommendation extends Action implements Notify {
+public final class Recommendation extends ActionStrategy implements Notify {
     public Recommendation() {
 
     }
 
-    private class LikedGenre implements Comparable<LikedGenre> {
+    private final class LikedGenre implements Comparable<LikedGenre> {
         private String genre;
         private int numLikes;
 
-        private LikedGenre(String genre, int numLikes) {
+        private LikedGenre(final String genre, final int numLikes) {
             this.genre = genre;
             this.numLikes = numLikes;
         }
 
         @Override
-        public int compareTo(LikedGenre likedGenre) {
+        public int compareTo(final LikedGenre likedGenre) {
             if (numLikes == likedGenre.numLikes) {
                 return genre.compareTo(likedGenre.genre);
             }
@@ -62,12 +62,18 @@ public final class Recommendation extends Action implements Notify {
             }
         }
 
-        notification.setMovieName("No recommendation");
+        notification.setMovieName(Constants.NO_RECOMMENDATION);
         notifyUsers(notifiedUsers, notification);
 
         setOutput(navigator);
     }
 
+    /**
+     * Building a list of the liked genres based on a liked movie list and sorting it according to
+     * the number of likes
+     * @param movies liked movie list
+     * @return ordered liked genres list
+     */
     public ArrayList<LikedGenre> sortLikedGenres(final ArrayList<Movie> movies) {
         boolean foundGenre;
 
@@ -77,13 +83,19 @@ public final class Recommendation extends Action implements Notify {
             for (String genre : movie.getGenres()) {
                 foundGenre = false;
                 for (LikedGenre likedGenre : likedGenres) {
+                    /**
+                     * Incrementing the number of likes for an already existing genre
+                     */
                     if (likedGenre.genre.equals(genre)) {
                         likedGenre.numLikes++;
                         foundGenre = true;
                     }
                 }
 
-                if (foundGenre == false) {
+                /**
+                 * Adding the genre in case this is its first appearance
+                 */
+                if (!foundGenre) {
                     likedGenres.add(new LikedGenre(genre, 1));
                 }
             }
@@ -94,13 +106,25 @@ public final class Recommendation extends Action implements Notify {
         return likedGenres;
     }
 
+    /**
+     * Select all movies not banned for a user (based on country)
+     * @param movies movies from database
+     * @param country user's country of origin
+     * @return available movies for a user
+     */
     public ArrayList<Movie> getVisibleMovies(final ArrayList<Movie> movies, final String country) {
         ArrayList<Movie> allowedMovies = new ArrayList<>(movies);
         allowedMovies.removeIf(movie -> movie.getCountriesBanned().contains(country));
         return allowedMovies;
     }
 
-    public boolean hasGenre(Movie movie, String genre) {
+    /**
+     * Checking if a movie contains a certain genre
+     * @param movie movie to check
+     * @param genre inquired genre
+     * @return true -- the movie contains the genre, false -- otherwise
+     */
+    public boolean hasGenre(final Movie movie, final String genre) {
         ArrayList<String> genres = new ArrayList<>();
 
         genres.add(genre);
@@ -109,7 +133,7 @@ public final class Recommendation extends Action implements Notify {
     }
 
     @Override
-    public void notifyUsers(ArrayList<User> users, Notification notification) {
+    public void notifyUsers(final ArrayList<User> users, final Notification notification) {
         for (User user : users) {
             user.getNotifications().add(notification);
         }

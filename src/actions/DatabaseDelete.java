@@ -7,7 +7,7 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class DatabaseDelete extends Action implements Notify {
+public final class DatabaseDelete extends ActionStrategy implements Notify {
     private String feature;
     private String deletedMovie;
 
@@ -19,64 +19,86 @@ public final class DatabaseDelete extends Action implements Notify {
 
     @Override
     public void actionStrategy(final Navigator navigator) {
-        Movie movie = getMovie(MoviesDatabase.getInstance().getMovies());
+        Movie movie = getMovie(MoviesDatabase.getInstance().getMovies(), deletedMovie);
 
+        /**
+         * Checking if there is a movie with such name in the movie Database
+         */
         if (movie == null) {
             setError();
             return;
         }
 
+        /**
+         * Notifying the users
+         */
         Notification notification = new Notification(deletedMovie, Constants.DELETE_NOTIFICATION);
 
         notifyUsers(UsersDatabase.getInstance().getUsers(), notification);
 
+        /**
+         * Removing the movie from the movie Database
+         */
         MoviesDatabase.getInstance().getMovies().remove(movie);
-    }
-
-    public Movie getMovie(final ArrayList<Movie> movies) {
-        for (Movie movie : movies) {
-            if (movie.getName().equals(deletedMovie)) {
-                return movie;
-            }
-        }
-        return null;
     }
 
     @Override
     public void notifyUsers(final ArrayList<User> users, final Notification notification) {
-
-        Movie movie;
-
         for (User user : users) {
+            /**
+             * Remove a purchased movie from the purchased movie list
+             */
+            Movie purchasedMovie = getMovie(user.getPurchasedMovies(), deletedMovie);
 
-            movie = getMovie(user.getPurchasedMovies(), deletedMovie);
-
-            if (movie != null) {
-                user.getPurchasedMovies().remove(movie);
+            if (purchasedMovie != null) {
+                user.getPurchasedMovies().remove(purchasedMovie);
                 user.getNotifications().add(notification);
                 returnTokens(user);
             }
 
-            movie = getMovie(user.getWatchedMovies(), deletedMovie);
+            /**
+             * Remove a watched movie from the watched movie list
+             */
+            Movie watchedMovie = getMovie(user.getWatchedMovies(), deletedMovie);
 
-            if (movie != null) {
-                user.getWatchedMovies().remove(movie);
+            if (watchedMovie != null) {
+                user.getWatchedMovies().remove(watchedMovie);
             }
 
-            movie = getMovie(user.getLikedMovies(), deletedMovie);
+            /**
+             * Remove a liked movie from the liked movie list
+             */
+            Movie likedMovie = getMovie(user.getLikedMovies(), deletedMovie);
 
-            if (movie != null) {
-                user.getLikedMovies().remove(movie);
+            if (likedMovie != null) {
+                user.getLikedMovies().remove(likedMovie);
             }
 
-            movie = getMovie(user.getRatedMovies(), deletedMovie);
+            /**
+             * Remove a rated movie from the rated movie list
+             */
+            Movie ratedMovie = getMovie(user.getRatedMovies(), deletedMovie);
 
-            if (movie != null) {
-                user.getRatedMovies().remove(movie);
+            if (ratedMovie != null) {
+                user.getRatedMovies().remove(ratedMovie);
+            }
+
+            /**
+             * Remove a asynchronous movie from the asynchronous movie list
+             */
+            Movie asynchronousMovie = getMovie(user.getAsynchronousMovies(), deletedMovie);
+
+            if (asynchronousMovie != null) {
+                user.getAsynchronousMovies().remove(asynchronousMovie);
             }
         }
     }
 
+    /**
+     * Returning a premium movie (for a premium user) or tokens (for a regular user)
+     * while removing a movie from the movie Database, based on account type
+     * @param user user that we are returning a premium movie/ tokens to
+     */
     public void returnTokens(final User user) {
         if (user.getCredentials().getAccountType().equals(Constants.PREMIUM)) {
             user.setNumFreePremiumMovies(user.getNumFreePremiumMovies() + 1);

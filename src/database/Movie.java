@@ -158,6 +158,12 @@ public final class Movie {
         return Integer.compare(duration, movie.getDuration());
     }
 
+    /**
+     * Comparing 2 movies based on their number of likes
+     * @param o generic object used for comparison
+     * @return 1 - the current movie has more likes, 0 - same number of likes,
+     * -1 the current movie has fewer likes
+     */
     public int compareByNumLikes(final Object o) {
         Movie movie = (Movie) o;
 
@@ -193,7 +199,12 @@ public final class Movie {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(final Object obj) {
         Movie movie = (Movie) obj;
         return this.getName().equals(movie.getName());
     }

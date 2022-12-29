@@ -1,10 +1,12 @@
 package actions;
 
 import database.Movie;
+import database.User;
 import fileio.ActionInput;
+import helpers.Constants;
 import server.Navigator;
 
-public final class OnPagePurchase extends Action {
+public final class OnPagePurchase extends ActionStrategy {
     private String feature;
 
     public OnPagePurchase(final ActionInput action) {
@@ -22,7 +24,9 @@ public final class OnPagePurchase extends Action {
             return;
         }
 
-        Movie moviePurchased = getMovie(navigator.getCurrentPage().getCurrentUser().getPurchasedMovies(),
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
+        Movie moviePurchased = getMovie(currentUser.getPurchasedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
         /**
@@ -39,17 +43,16 @@ public final class OnPagePurchase extends Action {
         /**
          * Mark the movie as purchased
          */
-        navigator.getCurrentPage().getCurrentUser().getPurchasedMovies().add(movie);
+        currentUser.getPurchasedMovies().add(movie);
 
         /**
          * Buy the movie by either using tokens or using a free movie from the premium account
          */
-        if (navigator.getCurrentPage().getCurrentUser().getCredentials().getAccountType().equals("premium") && navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() > 0) {
-            navigator.getCurrentPage().getCurrentUser().setNumFreePremiumMovies(
-                    navigator.getCurrentPage().getCurrentUser().getNumFreePremiumMovies() - 1);
+        if (currentUser.getCredentials().getAccountType().equals(Constants.PREMIUM)
+                && currentUser.getNumFreePremiumMovies() > 0) {
+            currentUser.setNumFreePremiumMovies(currentUser.getNumFreePremiumMovies() - 1);
         } else {
-            navigator.getCurrentPage().getCurrentUser().setTokensCount(
-                    navigator.getCurrentPage().getCurrentUser().getTokensCount() - 2);
+            currentUser.setTokensCount(currentUser.getTokensCount() - 2);
         }
 
         setOutput(navigator);

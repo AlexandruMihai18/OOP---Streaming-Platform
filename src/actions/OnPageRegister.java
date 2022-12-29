@@ -8,7 +8,7 @@ import pages.AuthenticatedHomepage;
 import pages.UnauthenticatedHomepage;
 import server.Navigator;
 
-public final class OnPageRegister extends Action {
+public final class OnPageRegister extends ActionStrategy {
     private String feature;
     private Credentials credentials;
 
