@@ -1,10 +1,11 @@
 package actions;
 
+import database.User;
 import fileio.ActionInput;
 import helpers.Constants;
 import server.Navigator;
 
-public final class OnPageBuyPremiumAccount extends Action {
+public final class OnPageBuyPremiumAccount extends ActionStrategy {
     private String feature;
 
     public OnPageBuyPremiumAccount(final ActionInput action) {
@@ -22,16 +23,17 @@ public final class OnPageBuyPremiumAccount extends Action {
             return;
         }
 
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
         /**
          * Check if the account is already premium
          */
-        if (navigator.getCurrentPage().getCurrentUser().getCredentials().getAccountType()
-                .equals(Constants.PREMIUM)) {
+        if (currentUser.getCredentials().getAccountType().equals(Constants.PREMIUM)) {
             setError();
             return;
         }
 
-        int currentTokens = navigator.getCurrentPage().getCurrentUser().getTokensCount();
+        int currentTokens = currentUser.getTokensCount();
 
         /**
          * Check if the user has enough tokens to buy premium account
@@ -46,7 +48,7 @@ public final class OnPageBuyPremiumAccount extends Action {
          */
         currentTokens -= Constants.TOKENS_FOR_PREMIUM;
 
-        navigator.getCurrentPage().getCurrentUser().setTokensCount(currentTokens);
-        navigator.getCurrentPage().getCurrentUser().getCredentials().setAccountType("premium");
+        currentUser.setTokensCount(currentTokens);
+        currentUser.getCredentials().setAccountType(Constants.PREMIUM);
     }
 }

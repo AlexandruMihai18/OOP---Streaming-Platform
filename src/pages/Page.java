@@ -34,10 +34,18 @@ public abstract class Page {
         allMoviesFromPage = page.getAllMoviesFromPage();
     }
 
+    /**
+     * Get the page name
+     * @return page name
+     */
     public String getPageName() {
         return pageName;
     }
 
+    /**
+     * Set the page name
+     * @param pageName given name of the page
+     */
     public void setPageName(final String pageName) {
         this.pageName = pageName;
     }
@@ -68,34 +76,66 @@ public abstract class Page {
      */
     public abstract void setActions();
 
+    /**
+     * Get the user on the page
+     * @return user on the page
+     */
     public User getCurrentUser() {
         return currentUser;
     }
 
+    /**
+     * Set the user for the page
+     * @param currentUser user that accesses the page
+     */
     public void setCurrentUser(final User currentUser) {
         this.currentUser = currentUser;
     }
 
+    /**
+     * Get the movies displayed on the page
+     * @return movies displayed on the page
+     */
     public ArrayList<Movie> getCurrentMovies() {
         return currentMovies;
     }
 
+    /**
+     * Set the movies visible on the page
+     * @param currentMovies movies visible on the page
+     */
     public void setCurrentMovies(final ArrayList<Movie> currentMovies) {
         this.currentMovies = currentMovies;
     }
 
+    /**
+     * Get the movies available on the page
+     * @return movies available on the page
+     */
     public ArrayList<Movie> getAllMoviesFromPage() {
         return allMoviesFromPage;
     }
 
+    /**
+     * Set the movies available on the page
+     * @param allMoviesFromPage movies available on the page
+     */
     public void setAllMoviesFromPage(final ArrayList<Movie> allMoviesFromPage) {
         this.allMoviesFromPage = allMoviesFromPage;
     }
 
+    /**
+     * Get the movie name on the page (designed for the SeeDetails page)
+     * @return name of the movie on the page
+     */
     public String getMovieName() {
         return movieName;
     }
 
+    /**
+     * Set the movie name on the page (designed for the SeeDetails page)
+     * @param movieName name of the movie on the page
+     */
     public void setMovieName(final String movieName) {
         this.movieName = movieName;
     }

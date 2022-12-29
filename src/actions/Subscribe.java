@@ -1,9 +1,10 @@
 package actions;
 
+import database.User;
 import fileio.ActionInput;
 import server.Navigator;
 
-public final class Subscribe extends Action {
+public final class Subscribe extends ActionStrategy {
     private String subscribedGenre;
 
     public Subscribe(final ActionInput action) {
@@ -12,17 +13,22 @@ public final class Subscribe extends Action {
     }
 
     @Override
-    public void actionStrategy(Navigator navigator) {
+    public void actionStrategy(final Navigator navigator) {
         if (!navigator.getCurrentPage().checkAction(getType())) {
             setError();
             return;
         }
 
-        if (navigator.getCurrentPage().getCurrentUser().getSubscribedGenres().contains(subscribedGenre)) {
+        User currentUser = navigator.getCurrentPage().getCurrentUser();
+
+        /**
+         * Checking if a user is already subscribed to a genre
+         */
+        if (currentUser.getSubscribedGenres().contains(subscribedGenre)) {
             setError();
             return;
         }
 
-        navigator.getCurrentPage().getCurrentUser().getSubscribedGenres().add(subscribedGenre);
+        currentUser.getSubscribedGenres().add(subscribedGenre);
     }
 }

@@ -8,7 +8,7 @@ import server.Navigator;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public final class DatabaseAdd extends Action implements Notify {
+public final class DatabaseAdd extends ActionStrategy implements Notify {
     private String feature;
     private Movie addedMovie;
 
@@ -20,32 +20,26 @@ public final class DatabaseAdd extends Action implements Notify {
 
     @Override
     public void actionStrategy(final Navigator navigator) {
-        if (checkMovie(MoviesDatabase.getInstance().getMovies(), addedMovie)) {
+        /**
+         * Checking if the movie is already in the movie Database
+         */
+        if (getMovie(MoviesDatabase.getInstance().getMovies(), addedMovie.getName()) != null) {
             setError();
             return;
         }
 
+        /**
+         * Notifying the users
+         */
         Notification notification = new Notification(addedMovie.getName(),
                 Constants.ADD_NOTIFICATION);
 
         notifyUsers(UsersDatabase.getInstance().getUsers(), notification);
 
+        /**
+         * Adding the movie to the movie Database
+         */
         MoviesDatabase.getInstance().getMovies().add(addedMovie);
-    }
-
-    /**
-     * Checking if a movie is part of an array list
-     * @param movies array of movies to check
-     * @param checkedMovie the inquired movie
-     * @return true -- the movie is inside the array, false -- otherwise
-     */
-    public boolean checkMovie(final ArrayList<Movie> movies, final Movie checkedMovie) {
-        for (Movie movie : movies) {
-            if (checkedMovie.equals(movie)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     @Override

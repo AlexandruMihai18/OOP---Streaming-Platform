@@ -1,8 +1,10 @@
 package server;
 
-import actions.Action;
+import actions.ActionStrategy;
 import actions.Recommendation;
 import database.ActionsDatabase;
+import database.User;
+import helpers.Constants;
 import pages.Page;
 import pages.UnauthenticatedHomepage;
 
@@ -36,12 +38,18 @@ public final class Navigator {
      * Start navigation between pages by following the actions from the actions database
      */
     public void startNavigation() {
-        for (Action action : ActionsDatabase.getInstance().getActions()) {
+        for (ActionStrategy action : ActionsDatabase.getInstance().getActions()) {
             action.actionStrategy(this);
         }
 
-        if (currentPage.getCurrentUser() != null && currentPage.getCurrentUser().getCredentials().getAccountType().equals("premium")) {
-            Action lastAction = new Recommendation();
+        User currentUser = currentPage.getCurrentUser();
+
+        /**
+         * Offering a recommendation for a premium user as a final action
+         */
+        if (currentUser != null
+                && currentUser.getCredentials().getAccountType().equals(Constants.PREMIUM)) {
+            ActionStrategy lastAction = new Recommendation();
             lastAction.actionStrategy(this);
             ActionsDatabase.getInstance().getActions().add(lastAction);
         }

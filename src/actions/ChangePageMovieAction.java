@@ -7,7 +7,7 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class ChangePageMovieAction extends Action {
+public final class ChangePageMovieAction extends ActionStrategy {
     private String page;
     private String movie;
 

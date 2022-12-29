@@ -4,7 +4,7 @@ import fileio.ActionInput;
 import pages.Page;
 import server.Navigator;
 
-public final class Back extends Action {
+public final class Back extends ActionStrategy {
     public Back(final ActionInput action) {
         super(action.getType());
     }

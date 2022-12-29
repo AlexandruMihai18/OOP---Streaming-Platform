@@ -8,7 +8,7 @@ import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class OnPageFilters extends Action {
+public final class OnPageFilters extends ActionStrategy {
     private String feature;
     private Filters filters;
 
@@ -31,8 +31,9 @@ public final class OnPageFilters extends Action {
         /**
          * Get movies by given filters
          */
-        ArrayList<Movie> searchMovies = getMoviesByFilters(navigator
-                .getCurrentPage().getAllMoviesFromPage());
+        ArrayList<Movie> allMoviesFromPage = navigator.getCurrentPage().getAllMoviesFromPage();
+
+        ArrayList<Movie> searchMovies = getMoviesByFilters(allMoviesFromPage);
         navigator.getCurrentPage().setCurrentMovies(searchMovies);
 
         setOutput(navigator);

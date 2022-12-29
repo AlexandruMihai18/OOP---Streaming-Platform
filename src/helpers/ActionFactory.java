@@ -34,7 +34,7 @@ public final class ActionFactory {
      * @param action given input action
      * @return specific type of action
      */
-    public static Action createAction(final ActionInput action) {
+    public static ActionStrategy createAction(final ActionInput action) {
        switch (action.getType()) {
             case CHANGE_PAGE_TYPE -> {
                 if (action.getPage().equals(PageEnum.SEE_DETAILS_PAGE)) {

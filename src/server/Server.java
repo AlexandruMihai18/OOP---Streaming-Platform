@@ -1,6 +1,6 @@
 package server;
 
-import actions.Action;
+import actions.ActionStrategy;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import database.ActionsDatabase;
 import database.MoviesDatabase;
@@ -62,7 +62,7 @@ public final class Server {
      * @param output ArrayNode used to store the output information, used to display it in main
      */
     public void importOutput(final ArrayNode output) {
-        for (Action action : ActionsDatabase.getInstance().getActions()) {
+        for (ActionStrategy action : ActionsDatabase.getInstance().getActions()) {
             if (action.getOutputNode() != null) {
                 output.add(action.getOutputNode());
             }

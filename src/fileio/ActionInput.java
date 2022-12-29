@@ -115,7 +115,7 @@ public final class ActionInput {
         return deletedMovie;
     }
 
-    public void setDeletedMovie(String deleteMovie) {
+    public void setDeletedMovie(final String deleteMovie) {
         this.deletedMovie = deleteMovie;
     }
 }

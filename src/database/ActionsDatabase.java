@@ -1,6 +1,6 @@
 package database;
 
-import actions.Action;
+import actions.ActionStrategy;
 import fileio.ActionInput;
 import helpers.ActionFactory;
 
@@ -11,7 +11,7 @@ import java.util.ArrayList;
  */
 public final class ActionsDatabase {
     private static ActionsDatabase actionsDatabase = null;
-    private ArrayList<Action> actions = new ArrayList<>();
+    private ArrayList<ActionStrategy> actions = new ArrayList<>();
 
     private ActionsDatabase() {
 
@@ -35,7 +35,7 @@ public final class ActionsDatabase {
         actionsDatabase = null;
     }
 
-    public ArrayList<Action> getActions() {
+    public ArrayList<ActionStrategy> getActions() {
         return actions;
     }
 
