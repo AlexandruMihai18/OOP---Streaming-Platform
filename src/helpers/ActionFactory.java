@@ -75,14 +75,14 @@ public final class ActionFactory {
                     case RATE_THE_MOVIE -> {
                         return new OnPageRateMovie(action);
                     }
+                    case SUBSCRIBE -> {
+                        return new OnPageSubscribe(action);
+                    }
                     default -> {
                         return null;
                     }
                 }
             }
-           case SUBSCRIBE -> {
-                return new Subscribe(action);
-           }
            case DATABASE -> {
                 switch (action.getFeature()) {
                     case ADD_DATABASE -> {

@@ -4,17 +4,19 @@ import database.User;
 import fileio.ActionInput;
 import server.Navigator;
 
-public final class Subscribe extends ActionStrategy {
+public final class OnPageSubscribe extends ActionStrategy {
+    private String feature;
     private String subscribedGenre;
 
-    public Subscribe(final ActionInput action) {
+    public OnPageSubscribe(final ActionInput action) {
         super(action.getType());
+        feature = action.getFeature();
         subscribedGenre = action.getSubscribedGenre();
     }
 
     @Override
     public void actionStrategy(final Navigator navigator) {
-        if (!navigator.getCurrentPage().checkAction(getType())) {
+        if (!navigator.getCurrentPage().checkAction(feature)) {
             setError();
             return;
         }

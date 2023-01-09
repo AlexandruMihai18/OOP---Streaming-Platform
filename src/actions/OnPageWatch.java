@@ -39,7 +39,11 @@ public final class OnPageWatch extends ActionStrategy {
         Movie watchedMovie = getMovie(currentUser.getWatchedMovies(),
                 navigator.getCurrentPage().getMovieName());
 
+        /**
+         * Check if the movie has already been watch
+         */
         if (watchedMovie != null) {
+            setOutput(navigator);
             return;
         }
 

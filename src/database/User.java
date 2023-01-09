@@ -1,11 +1,13 @@
 package database;
 
+import observer.MyObservable;
 import fileio.UserInput;
 import helpers.Constants;
+import observer.MyObserver;
 
 import java.util.ArrayList;
 
-public final class User {
+public final class User implements MyObserver {
     private Credentials credentials;
     private int tokensCount;
     private int numFreePremiumMovies;
@@ -133,5 +135,16 @@ public final class User {
 
     public void setNotifications(final ArrayList<Notification> notifications) {
         this.notifications = notifications;
+    }
+
+    /**
+     * Update a user by adding a notification
+     * @param o action that generates a notification
+     * @param arg notification
+     */
+    @Override
+    public void update(final MyObservable o, final Object arg) {
+        Notification notification = (Notification) arg;
+        notifications.add(notification);
     }
 }

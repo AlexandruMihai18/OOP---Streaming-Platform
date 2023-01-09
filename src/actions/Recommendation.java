@@ -1,18 +1,20 @@
 package actions;
 
-import database.Movie;
-import database.MoviesDatabase;
-import database.Notification;
-import database.User;
+import database.*;
 import helpers.Constants;
+import observer.MyObservable;
+import observer.MyObserver;
 import server.Navigator;
 
 import java.util.*;
 
-public final class Recommendation extends ActionStrategy implements Notify {
+public final class Recommendation extends ActionStrategy implements MyObservable {
     public Recommendation() {
 
     }
+
+    private ArrayList<MyObserver> observers = new ArrayList<>();
+
 
     private final class LikedGenre implements Comparable<LikedGenre> {
         private String genre;
@@ -22,6 +24,7 @@ public final class Recommendation extends ActionStrategy implements Notify {
             this.genre = genre;
             this.numLikes = numLikes;
         }
+
 
         @Override
         public int compareTo(final LikedGenre likedGenre) {
@@ -36,6 +39,9 @@ public final class Recommendation extends ActionStrategy implements Notify {
     public void actionStrategy(final Navigator navigator) {
         User currentUser = navigator.getCurrentPage().getCurrentUser();
 
+        /**
+         * Obtain the liked genres for a user and sorting them by number of likes
+         */
         ArrayList<LikedGenre> likedGenres = sortLikedGenres(currentUser.getLikedMovies());
 
         ArrayList<Movie> movies = getVisibleMovies(MoviesDatabase.getInstance().getMovies(),
@@ -43,29 +49,64 @@ public final class Recommendation extends ActionStrategy implements Notify {
 
         Collections.sort(movies, Movie::compareByNumLikes);
 
+        /**
+         * Set the notification
+         */
         Notification notification = new Notification(null, Constants.RECOMMENDATION_NOTIFICATION);
 
         ArrayList<User> notifiedUsers = new ArrayList<>();
         notifiedUsers.add(currentUser);
 
+        /**
+         * Set the notified users
+         */
+        setObservers(notifiedUsers);
+
         navigator.getCurrentPage().setCurrentMovies(null);
 
+        /**
+         * Find the first movie not watched that contains the most liked genre
+         * and notify the observers
+         */
         for (LikedGenre likedGenre : likedGenres) {
             for (Movie movie : movies) {
                 if (!currentUser.getWatchedMovies().contains(movie)
                         && hasGenre(movie, likedGenre.genre)) {
                     notification.setMovieName(movie.getName());
-                    notifyUsers(notifiedUsers, notification);
+                    notifyObservers(notification);
                     setOutput(navigator);
                     return;
                 }
             }
         }
 
+        /**
+         * No movie found -- set notification accordingly
+         */
         notification.setMovieName(Constants.NO_RECOMMENDATION);
-        notifyUsers(notifiedUsers, notification);
+        notifyObservers(notification);
 
         setOutput(navigator);
+    }
+
+    /**
+     * Add all potential observers to the actual observers list
+     * @param potentialObservers users that could be observers
+     */
+    @Override
+    public void setObservers(final ArrayList<User> potentialObservers) {
+        for (User user : potentialObservers) {
+            observers.add(user);
+        }
+    }
+
+    /**
+     * Notify all observers
+     * @param arg notification
+     */
+    @Override
+    public void notifyObservers(final Object arg) {
+        observers.forEach(observers -> observers.update(this, arg));
     }
 
     /**
@@ -130,12 +171,5 @@ public final class Recommendation extends ActionStrategy implements Notify {
         genres.add(genre);
 
         return movie.checkMovieByGenre(genres);
-    }
-
-    @Override
-    public void notifyUsers(final ArrayList<User> users, final Notification notification) {
-        for (User user : users) {
-            user.getNotifications().add(notification);
-        }
     }
 }
