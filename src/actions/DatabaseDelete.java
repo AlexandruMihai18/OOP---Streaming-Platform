@@ -3,13 +3,17 @@ package actions;
 import database.*;
 import fileio.ActionInput;
 import helpers.Constants;
+import observer.MyObservable;
+import observer.MyObserver;
 import server.Navigator;
 
 import java.util.ArrayList;
 
-public final class DatabaseDelete extends ActionStrategy implements Notify {
+public final class DatabaseDelete extends ActionStrategy implements MyObservable {
     private String feature;
     private String deletedMovie;
+
+    private ArrayList<MyObserver> observers = new ArrayList<>();
 
     public DatabaseDelete(final ActionInput action) {
         super(action.getType());
@@ -30,11 +34,15 @@ public final class DatabaseDelete extends ActionStrategy implements Notify {
         }
 
         /**
-         * Notifying the users
+         * Set the notification
          */
         Notification notification = new Notification(deletedMovie, Constants.DELETE_NOTIFICATION);
 
-        notifyUsers(UsersDatabase.getInstance().getUsers(), notification);
+        /**
+         * Set the observers and notify them
+         */
+        setObservers(UsersDatabase.getInstance().getUsers());
+        notifyObservers(notification);
 
         /**
          * Removing the movie from the movie Database
@@ -42,9 +50,15 @@ public final class DatabaseDelete extends ActionStrategy implements Notify {
         MoviesDatabase.getInstance().getMovies().remove(movie);
     }
 
+    /**
+     * Filter the potential observers based on a purchased movie
+     * In addition, preemptively removes the movie from all the potential lists
+     * of a user
+     * @param potentialObservers users that could be observers
+     */
     @Override
-    public void notifyUsers(final ArrayList<User> users, final Notification notification) {
-        for (User user : users) {
+    public void setObservers(final ArrayList<User> potentialObservers) {
+        for (User user : potentialObservers) {
             /**
              * Remove a purchased movie from the purchased movie list
              */
@@ -52,7 +66,7 @@ public final class DatabaseDelete extends ActionStrategy implements Notify {
 
             if (purchasedMovie != null) {
                 user.getPurchasedMovies().remove(purchasedMovie);
-                user.getNotifications().add(notification);
+                observers.add(user);
                 returnTokens(user);
             }
 
@@ -84,7 +98,7 @@ public final class DatabaseDelete extends ActionStrategy implements Notify {
             }
 
             /**
-             * Remove a asynchronous movie from the asynchronous movie list
+             * Remove an asynchronous movie from the asynchronous movie list
              */
             Movie asynchronousMovie = getMovie(user.getAsynchronousMovies(), deletedMovie);
 
@@ -92,6 +106,15 @@ public final class DatabaseDelete extends ActionStrategy implements Notify {
                 user.getAsynchronousMovies().remove(asynchronousMovie);
             }
         }
+    }
+
+    /**
+     * Notify all observers
+     * @param arg notification
+     */
+    @Override
+    public void notifyObservers(final Object arg) {
+        observers.forEach(observers -> observers.update(this, arg));
     }
 
     /**

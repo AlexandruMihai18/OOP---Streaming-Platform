@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * Strategy Pattern class designed to identify each type of possible action.
- * The doAction method is defined as abstract and implemented accordingly to
+ * The actionStrategy method is defined as abstract and implemented accordingly to
  * each algorithm needs in order to change the navigator.
  */
 public abstract class ActionStrategy {
